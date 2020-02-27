@@ -1,0 +1,68 @@
+{% extends "common/layout-back.html" %} 
+{% block body %}
+
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="javascript:;">首页</a><span lay-separator="">/</span>
+    <a href="javascript:;">产品中心</a><span lay-separator="">/</span>
+    <a><cite>{% if seriseId %}产品系列修改{% else %}添加产品系列{% endif %}</cite></a>
+  </span>
+</div>
+
+<div class="layui-fluid" style="padding:15px;">
+  <form class="layui-form" wid100="" id="regularForm"  lay-filter="regularForm">
+    <div class="layui-form-item">
+      <label class="layui-form-label">产品系列名</label>
+      <div class="layui-input-block">
+        <input type="text" name="name" lay-verify="require" required autocomplete="off" placeholder="请输入产品系列名" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">英文产品系列名</label>
+      <div class="layui-input-block">
+        <input type="text" name="enname" lay-verify="require" required autocomplete="off" placeholder="请输入英文产品系列名" class="layui-input">
+      </div>
+    </div>
+   
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="article">立即提交</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  layui.use(['element', 'form'], function () {
+      var form = layui.form  
+
+       
+        form.render();
+
+
+        {% if seriseId %}
+        //获取
+        AjaxBox('/api/seriseinfo',{id:<$ seriseId $>},function (req) {
+            form.val('regularForm',req.data)
+        })
+        {% endif %}
+
+        //提交
+        form.on('submit(article)',function (data) {
+          data.field = Object.assign({},data.field,{{% if seriseId %}id:<$ seriseId $>{% endif %}})
+            AjaxBox('/api/serise',data.field,function (req) {
+                layer.msg('成功',{icon:1,time:1000,function () {
+                  {% if seriseId %}
+                  location.reload()
+                  {% else %}
+                  $('#regularForm')[0].reset();
+                  {% endif %}
+                }});
+                
+            })
+            return false
+        })
+
+  });
+</script>
+{% endblock %}

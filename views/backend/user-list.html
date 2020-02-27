@@ -1,0 +1,145 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="admin-content-box-nav">
+    <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+      <a href="javascript:;">首页</a><span lay-separator="">/</span>
+      <a href="javascript:;">会员管理</a><span lay-separator="">/</span>
+      <a><cite>会员列表</cite></a>
+    </span>
+  </div>
+
+  <div class="layui-form layui-card-header" style="padding-top:15px;padding-bottom:15px;">
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+          <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+          <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">爱好</label>
+        <div class="layui-input-block">
+          <select name="interest">
+            <option value="">请选择</option>
+            <option value="0">写作</option>
+            <option value="1" selected="">阅读</option>
+            <option value="2">游戏</option>
+            <option value="3">音乐</option>
+            <option value="4">旅行</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline">
+        <button class="layui-btn">
+          <i class="layui-icon layui-icon-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="layui-fluid">
+    <div style="padding-top:15px;padding-bottom:5px;">
+      <button class="layui-btn" data-type="batchdel">删除</button>
+      <button class="layui-btn" data-type="add">添加</button>
+    </div>
+
+    <div class="layui-form">
+      <table class="layui-table">
+        <colgroup>
+          <col width="60">
+          <col width="100">
+          <col width="100">
+          <col width="150">
+          <col>
+          <col width="300">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>出生地</th>
+            <th>出生日期</th>
+            <th>代表作品</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>李宗盛</td>
+            <td>台湾</td>
+            <td>1958-07-19</td>
+            <td>凡人歌、寂寞难耐、鬼迷心窍、真心英雄、当爱已成往事、给自己的歌、梦醒时分、爱的代价、山丘</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                  class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"
+                lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>周杰伦</td>
+            <td>台湾</td>
+            <td>1979-01-18</td>
+            <td>星晴、龙卷风、简单爱、双截棍、晴天、以父之名、七里香、夜曲、青花瓷、彩虹、稻香、告白气球</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                  class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"
+                lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>张爱玲</td>
+            <td>上海</td>
+            <td>1920-09-30</td>
+            <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                  class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"
+                lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>马云</td>
+            <td>浙江</td>
+            <td>1964-09-10</td>
+            <td>1999年创办阿里巴巴集团,2008年日本第十届企业家大奖,2009中国经济十年商业领袖,2012年CCTV中国经济年度人物</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                  class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"
+                lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>韩寒</td>
+            <td>上海</td>
+            <td>1982-09-23</td>
+            <td>三重门、毒、零下一度、就这么漂来漂去、后会无期‍‍‍‍、乘风破浪、天空制造 </td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                  class="layui-icon layui-icon-edit"></i>编辑</a> <a class="layui-btn layui-btn-danger layui-btn-xs"
+                lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="layui-box layui-laypage layui-laypage-default"><a href="javascript:;"
+          class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon layui-icon-prev"></i></a><span
+          class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;"
+          data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" class="layui-laypage-last"
+          title="尾页" data-page="4">4</a><a href="javascript:;" class="layui-laypage-next" data-page="2"><i
+            class="layui-icon layui-icon-next"></i></a><span class="layui-laypage-count">共 100 条</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    layui.use('form', function () {
+      var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+      //……
+
+      //但是，如果你的HTML是动态生成的，自动渲染就会失效
+      //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+      form.render();
+    });
+  </script>
+{% endblock %}

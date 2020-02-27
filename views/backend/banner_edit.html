@@ -1,0 +1,75 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="layui-fluid">
+    <div id="regularForm" lay-filter="regularform" wid100="" class="layui-form" style="padding: 20px 30px 0 0;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="required" placeholder="请输入名称" autocomplete="off"
+            class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">排序</label>
+          <div class="layui-input-inline">
+            <input type="text" name="Index" lay-verify="required" placeholder="请输入排序" autocomplete="off"
+              class="layui-input" >
+          </div>
+        </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button id="dosubmit" class="layui-btn" lay-submit="" lay-filter="banner">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var bannerIndex = getParam('position');
+    var curHonner = null;
+    layui.use(['form'], function () {
+      var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+      //……
+      //但是，如果你的HTML是动态生成的，自动渲染就会失效
+      //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+      form.render();
+      //获取
+      function getBaseMsg() {
+            AjaxBox('/api/aboutinfo',{typeid:3},function (req) { 
+                var info = req.data;
+                curHonner = JSON.parse(info.honer)
+                form.val('regularform',JSON.parse(info.honer)[bannerIndex])
+            })
+        }
+
+        function change(arr,k,j) {
+            var c = arr[k];
+
+            arr[k] = arr[j];
+            arr[j] = c;
+            return arr
+        }
+        
+
+
+
+        getBaseMsg()
+
+        form.on('submit(banner)', function (data) {
+            curHonner[bannerIndex].title = data.field.title
+            curHonner[bannerIndex].Index = data.field.Index
+            if(data.field.Index != bannerIndex){
+              curHonner[bannerIndex].Index = data.field.Index
+              curHonner[data.field.Index].Index = bannerIndex
+              curHonner = change(curHonner,bannerIndex,data.field.Index)
+              
+            }
+            AjaxBox('/api/about',{honer:JSON.stringify(curHonner),typeid:3},function(req){
+                layer.msg('成功',{icon:1,time:1000})
+            })
+            return false;
+        });
+     
+    });
+  </script>
+{% endblock %}

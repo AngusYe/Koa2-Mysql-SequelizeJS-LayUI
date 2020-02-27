@@ -1,0 +1,53 @@
+{% extends "common/layout.html" %} 
+{% block body %}	
+			
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_pro.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		{% include "common/product_bar.html" %} 
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}<$ product.proname $>{% else %}<$ product.enproname $>{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> > <a href="/pro">{% if language=='cn' %}产品展示{% else %}PRODUCTS{% endif %}</a> > <i>{% if language=='cn' %}<$ product.proname $>{% else %}<$ product.enproname $>{% endif %}</i></span>
+			</div>
+			<div class="pro_s1 clearfix">
+				<div class="ps1_left">
+					<img src="<$ base_url $><$ product.pastcover $>" alt="" class="vbgcenter" />
+					<i></i>
+				</div>
+				<div class="ps1_right">
+					<h3>{% if language=='cn' %}简介{% else %}Introduction{% endif %}</h3>
+					<span></span>
+					<div>
+						{% if language=='cn' %}<$ product.prointro|safe $>{% else %}<$ product.enprointro|safe $>{% endif %}
+					</div>
+					
+				</div>
+			</div>
+			<div class="pro_s2">
+				<div class="guan_top">
+					<span>{% if language=='cn' %}产品详情{% else %}Detail{% endif %}</span>
+				</div>
+				{% for item in product.coverurl|shorten %}
+				<div class="img_pro">
+					<img src="<$ base_url $><$ item $>" alt="" class="vcenter" />
+					<i></i>
+				</div>
+				{% endfor %}
+				<div>
+					{% if language=='cn' %}<$ product.procontent|safe $>{% else %}<$ product.enprocontent|safe $>{% endif %}
+				</div>
+			</div>
+			
+			{% include "common/product_xj.html" %}
+
+			{% include "common/news_bar.html" %}
+		</div>
+		
+	</div>
+	
+	
+	
+	{% endblock %}		

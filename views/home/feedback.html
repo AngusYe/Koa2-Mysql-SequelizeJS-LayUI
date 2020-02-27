@@ -1,0 +1,106 @@
+{% extends "common/layout.html" %} 
+
+{% block head %}
+<link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+<script type="text/javascript" src="/lib/layui/layui.js"></script>
+{% endblock %}
+{% block body %}	
+	
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_contact.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		<div class="zi_left">
+			<div class="top">
+				<span class="span1">联系我们</span>
+				<span  class="span2">CONTACT</span>
+			</div>
+			<ul>
+				<li >
+					<a href="/contact">联系我们</a>
+				</li>
+				<li  class="active">
+					<a href="/feedback">在线留言</a>
+				</li>					
+				
+			</ul>
+		</div>
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">在线留言</span>
+				<span class="curbar"><i>您当前的位置：</i><a href="/">首页</a> ><i>在线留言</i></span>
+			</div>
+			<div class="mess_nei">
+				<div class="top_mes_t"></div>
+				<p>
+					以下带<i>*</i>号的为必填选项，您在访问我们的网站过程中如有任何问题或有任何需求，请留言，谢谢！
+				</p>
+				<form class="layui-form"  id="msgForm">
+					<ul class="name_li clearfix">
+						<li>
+							<img src="/img/name.png" alt="" /><input type="text" placeholder="姓名"  name="name"  lay-verify="required" /> <i>*</i>
+						</li>
+						<li>
+							<img src="/img/dian_b.png" alt="" /><input type="text" maxlength="11" placeholder="联系电话"  name="phone"  lay-verify="phone" /> <i>*</i>
+						</li>
+						
+						<li>
+							<img src="/img/email.png" alt="" /><input type="text" placeholder="E-MALL邮箱"  name="email" lay-verify="email"  /><i>*</i>
+						</li>
+						<li>
+						<img src="/img/tit.png" alt="" /><input type="text" name="title" placeholder="标题" lay-verify="required" /><i>*</i>
+						</li>
+					</ul>
+					<div class="tex_a">
+						<textarea placeholder="填写您宝贵的意见或建议..." type="text" name="content" lay-verify="required" id="cont"></textarea>&nbsp;<i>*</i>
+					</div>
+					<div class="yan clearfix">
+						<input type="text" placeholder="验证码"  name="code" lay-verify="required" /> <i>*</i><div id="imgcode" onclick="getCurCode()"></div><a onclick="getCurCode()" class="ah">看不清，换一张</a>
+					</div>
+					<div class="tijiao clearfix">
+						<a class="res btn  active" lay-submit="" lay-filter="message">提 交</a>
+					</div>
+				</form>
+			</div>
+			{% include "common/news_bar.html" %}
+		</div>
+		
+	</div>
+
+	<script>
+	getCurCode()
+		layui.use(['form','element'],function () {
+			var form = layui.form;
+			form.on('submit(message)',function(data){
+				$.ajax({
+					type:'POST',
+					url:'/api/message',
+					dataType: "json",
+					data:data.field,
+					success:function(req){
+						if(req.code == 200){
+							form.render();
+							layer.msg("成功！", {icon: 1, time: 1000});
+							$("#msgForm")[0].reset();
+							
+							return false;
+						}else{
+							layer.msg("失败,"+req.msg, {icon: 5, time: 1000});
+							return false;
+						}
+					}
+				})
+			
+				return false;
+			})
+		})
+	
+	
+	
+	</script>
+	
+	
+	
+	
+	{% endblock %}

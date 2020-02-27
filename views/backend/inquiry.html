@@ -1,0 +1,212 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="admin-content-box-nav">
+    <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+      <a href="javascript:;">首页</a><span lay-separator="">/</span>
+      <a href="javascript:;">信息处理中心</a><span lay-separator="">/</span>
+      <a><cite>产品询价列表</cite></a>
+    </span>
+  </div>
+
+  <div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
+    <form class="layui-form layui-col-md12" id="search_form">
+      搜索：
+      <div class="layui-inline">
+        <input class="layui-input" placeholder="开始日期" name="startTime" id="start-date">
+      </div>
+      <div class="layui-inline">
+        <input class="layui-input" placeholder="截止日期" name="endTime" id="end-date">
+      </div>
+      <div class="layui-inline">
+        <input type="text" name="phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+      </div>
+      状态：
+      <div class="layui-inline">
+          <select name="status" lay-filter="handle">
+            <option value=""></option>
+            <option value="0">未处理</option>
+            <option value="1">已处理</option>
+          </select>
+      </div>
+      <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-icon-search"></i></button>
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search_reset" title="重置">
+            <i class="layui-icon layui-icon-refresh"></i>
+        </button>
+    </form>
+  </div>
+
+  <div class="layui-fluid">
+    <div style="padding-top:15px;padding-bottom:5px;">
+        <button class="layui-btn layui-btn-normal"  id="batchUp">
+            <i class="layui-icon layui-icon-ok"></i>批量已处理
+        </button>
+      <button class="layui-btn layui-btn-danger" data-type="getCheckData" id="batchDel"><i
+          class="layui-icon layui-icon-delete"></i>批量删除</button>
+      <button class="layui-btn" id="addArticle"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+      <span class="fr" style="line-height:40px">共有数据：<font id="countNum"></font> 条</span>
+    </div>
+
+    <div class="layui-form">
+      <table class="layui-table" id="regularTable"  lay-filter="tableFilter"></table>
+    </div>
+  </div>
+  <script>
+      layui.use(['laydate', 'table', 'form'], function () {
+          var form = layui.form; 
+          var table = layui.table;
+          var laydate = layui.laydate;
+
+          //执行laydate实例
+          //常规用法
+          laydate.render({
+            elem: '#start-date',
+            type:'datetime'
+          });
+          laydate.render({
+            elem: '#end-date',
+            type:'datetime'
+          });
+
+
+          //article list
+          function getArticleList(param) {
+              table.render({
+                  elem: '#regularTable',
+                  url: '/api/valuelist',
+                  method:'post',
+                  contentType: 'application/json',
+                  where:param,
+                  headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+                  limit: 10,
+                  limits:false,
+                  page: true,
+                  even: true,
+                  cols: [[
+                      {type: 'checkbox'},
+                      {field: 'index', title: '序号', width: 80, templet: '#xuhaoTpl'},
+                      {field: 'name', title: '联系人', width: 200},
+                      {field: 'phone', title: '联系电话', width: 200},
+                      {field: 'title', title: '标题', width: 200},
+                      {field: 'content', title: '内容', width: 200},
+                      {field: 'email', title: '邮箱', width: 200},
+                      {field: 'status', title: '状态', width: 120,templet: '#statusTpl'},
+                      {field: 'createdAt', title: '提交时间', width: 180},
+                      {title: '操作', width: 200, templet: '#articleTpl' , align: 'center'}
+                  ]],
+                  done: function (res, curr, count) {
+                      $("#countNum").text(count);
+                  }
+              });
+          }
+          getArticleList()
+
+          table.on('tool(tableFilter)', function (obj) {
+              var data = obj.data;
+              var layEvent = obj.event;
+              if (layEvent === 'deal') {
+                    layer.confirm("确定该条留言已处理？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                        updateMsg({id:data.id,status:1})
+                        layer.closeAll();
+                    });
+                }  else if (layEvent === 'del') {
+                  layer.confirm("确定要删除吗？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                      deleteMsg({id:data.id})
+                      layer.closeAll();
+                  });
+              }
+          });
+
+
+         
+
+          //删除文章
+          function deleteMsg(param) {
+            AjaxBox('/api/valuedel',param,function () {
+                layer.msg("成功！", {icon: 1, time: 1000});
+                table.reload('regularTable')
+            })
+          }
+
+
+          //批量删除
+        $('#batchDel').click(function(){
+            var checkStatus = table.checkStatus('regularTable')
+                  ,data = checkStatus.data;
+              var saleidArr = [];
+              $.each(data,function(index,item){
+                  saleidArr.push(item.id)
+              })
+              layer.confirm("确定删除这"+data.length+"条数据？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                  deleteMsg({id:saleidArr})
+              });
+        })
+
+        //更新状态
+        function updateMsg(param) {
+            AjaxBox('/api/valueup',param,function () {
+                layer.msg("成功！", {icon: 1, time: 1000});
+                table.reload('regularTable')
+            })
+          }
+
+           //批量处理
+        $('#batchUp').click(function(){
+            var checkStatus = table.checkStatus('regularTable')
+                    ,data = checkStatus.data;
+                var saleidArr = [];
+                $.each(data,function(index,item){
+                    if(item.status != 1){
+                        saleidArr.push(item.id)
+                    }
+                })
+                if(saleidArr.length<=0){
+                    layer.msg("您选择的数据已经处理过了，请重新选择", {icon: 1, time: 1000});
+                }else{
+                    layer.confirm("确定已处理？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                      updateMsg({status:1,id:saleidArr});
+                    
+                    });
+                }
+                
+        })
+
+
+        form.on('submit(search)', function (data) {
+            getArticleList(data.field)
+            return false;
+        });
+
+
+        form.on('submit(search_reset)', function (data) {
+            $('#search_form')[0].reset()
+            getArticleList()
+            return false;
+        });
+
+
+
+
+
+
+      });
+
+
+      
+  </script>
+  <!-- tpl tool -->
+  <script type="text/html" id="xuhaoTpl">
+    {{d.LAY_INDEX}}
+  </script>
+  <script type="text/html" id="statusTpl">
+    {{d.status?"<span class='allow'>已处理</span>":"<span class='tip'>未处理</span>"}}
+  </script>
+  <script type="text/html" id="articleTpl">
+      <a href="javascript:;" class="layui-btn layui-btn-normal layui-btn-xs" title="处理" lay-event="deal">
+        <i class="layui-icon">&#xe605;</i>
+      </a> 
+      <a class="layui-btn layui-btn-danger layui-btn-xs" title="删除" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+      </a>
+  </script>
+{% endblock %}

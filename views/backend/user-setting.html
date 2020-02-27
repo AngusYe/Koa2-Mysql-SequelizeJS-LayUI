@@ -1,0 +1,142 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="layui-fluid" style="padding-top:15px;padding-bottom:15px;">
+    <div class="layui-form" lay-filter="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">我的角色</label>
+        <div class="layui-input-inline">
+          <select name="role" lay-verify="">
+            <option value="1" selected="">超级管理员</option>
+            <option value="2" disabled="">普通管理员</option>
+            <option value="3" disabled="">审核员</option>
+            <option value="4" disabled="">编辑人员</option>
+          </select>
+          <div class="layui-unselect layui-form-select">
+            <div class="layui-select-title"><input type="text" placeholder="请选择" value="超级管理员" readonly=""
+                class="layui-input layui-unselect"><i class="layui-edge"></i></div>
+            <dl class="layui-anim layui-anim-upbit">
+              <dd lay-value="1" class="layui-this">超级管理员</dd>
+              <dd lay-value="2" class=" layui-disabled">普通管理员</dd>
+              <dd lay-value="3" class=" layui-disabled">审核员</dd>
+              <dd lay-value="4" class=" layui-disabled">编辑人员</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="username" value="xianxin" readonly="" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="nickname" value="贤心" lay-verify="nickname" autocomplete="off" placeholder="请输入昵称"
+            class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+          <input type="radio" name="sex" value="男" title="男">
+          <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+            <div>男</div>
+          </div>
+          <input type="radio" name="sex" value="女" title="女" checked="">
+          <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+            <div>女</div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">头像</label>
+        <div class="layui-input-inline">
+          <input name="avatar" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址"
+            value="http://cdn.layui.com/avatar/168.jpg" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-btn-container" style="width: auto;">
+          <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+            <i class="layui-icon layui-icon-upload"></i>上传图片
+          </button><input class="layui-upload-file" type="file" accept="" name="file">
+          <button class="layui-btn layui-btn-primary" layadmin-event="avartatPreview">查看图片</button>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-inline">
+          <input type="text" name="cellphone" value="" lay-verify="phone" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+          <input type="text" name="email" value="" lay-verify="email" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+          <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit="" lay-filter="setmyinfo">确认修改</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    layui.use(['laydate', 'jquery', 'form', 'upload'], function () {
+      var $ = layui.jquery, upload = layui.upload;
+
+      var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+      //……
+      //但是，如果你的HTML是动态生成的，自动渲染就会失效
+      //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+      form.render();
+
+      var laydate = layui.laydate;
+      //执行laydate实例
+      //常规用法
+      laydate.render({
+        elem: '#start-date'
+      });
+      laydate.render({
+        elem: '#end-date'
+      });
+
+      //普通图片上传
+      var uploadInst = upload.render({
+        elem: '#LAY_avatarUpload'
+        , url: '/upload/'
+        , before: function (obj) {
+          //预读本地文件示例，不支持ie8
+          obj.preview(function (index, file, result) {
+            $('#demo1').attr('src', result); //图片链接（base64）
+          });
+        }
+        , done: function (res) {
+          //如果上传失败
+          if (res.code > 0) {
+            return layer.msg('上传失败');
+          }
+          //上传成功
+        }
+        , error: function () {
+          //演示失败状态，并实现重传
+          var demoText = $('#demoText');
+          demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+          demoText.find('.demo-reload').on('click', function () {
+            uploadInst.upload();
+          });
+        }
+      });
+    });
+  </script>
+{% endblock %}

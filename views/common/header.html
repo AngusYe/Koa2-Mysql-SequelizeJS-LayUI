@@ -1,0 +1,60 @@
+	<!--header-->
+	<header class="header">
+            
+            <div class="container clearfix">
+                <div class="logo">
+                    <a href="/"><img src="<$ base_url $><$ overAllData.logo $>" alt="" /></a>
+                </div>
+                <a href="#mmenu" class="iconfont phone-nav">
+                     <span class="glyphicon glyphicon-align-justify"></span>
+                </a>
+                <div class="nav_right">
+                    <ul>	                                                                                                                                  
+                        <li {% if active == 'index' %}class="active"{% endif %}><a href="/">{% if language=='cn' %}首页{% else %}HOME{% endif %}</a></li>
+                        <li {% if active == 'about' or active == 'culture' or active == 'speech' or active == 'honor' %}class="active"{% endif %}><a href="/about">{% if language=='cn' %}关于我们{% else %}ABOUT{% endif %}</a>
+                            <div class="erji">
+                                <a href="/about">{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</a>
+                                <a href="/speech">{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</a>
+                                <a href="/honor">{% if language=='cn' %}荣誉资质{% else %}Honor{% endif %}</a>
+                                <a href="/culture">{% if language=='cn' %}企业文化{% else %}Company culture{% endif %}</a>
+                                <a href="/mien">{% if language=='cn' %}基胜风采{% else %}Keson Mien{% endif %}</a>
+                            </div>
+                        </li>
+                        <li {% if active == 'product' or active == 'proshow' %}class="active"{% endif %}><a href="/product">{% if language=='cn' %}产品展示{% else %}Products{% endif %}</a>
+                            <!-- <div class="erji">
+                                <a href="/product">画册宣传册</a>
+                                <a href="/product">海报 </a>
+                                <a href="/product">包装 </a>
+                            </div> -->
+                        </li>
+                        <li {% if active == 'news' or active == 'tradenews' %}class="active"{% endif %}><a href="/news">{% if language=='cn' %}新闻资讯{% else %}News{% endif %}</a>
+                            <div class="erji">
+                                <a href="/news">{% if language=='cn' %}公司新闻{% else %}Company{% endif %}</a>
+                                <a href="/tradenews">{% if language=='cn' %}行业新闻{% else %}Trade{% endif %}</a>
+                            </div>
+                        </li>
+                        <li {% if active == 'contact' or active == 'feedback' %}class="active"{% endif %}><a href="/contact">{% if language=='cn' %}联系我们{% else %}Connect{% endif %}</a>
+                            <div class="erji">
+                                <a href="/contact">{% if language=='cn' %}联系方式{% else %}Contact{% endif %}</a>
+                                <a href="/feedback">{% if language=='cn' %}在线留言{% else %}Feedback{% endif %}</a>    			
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="yuyan language">
+                        <span>{% if language == 'cn'%}中文{% else %}ENGLISH{% endif %}</span>
+                        <i>
+                            <a  lagua="en">ENGLISH</a>
+                            <a  lagua="cn">中文</a>
+                        </i>
+                    </div>
+                </div>
+            </div>
+            <div class="dian_div">
+                <div class="container">
+                    <span>{% if language == 'cn'%}免费电话{% else %}Freefone{% endif %}：<a href="tel:<$ overAllData.hotphone $>"><$ overAllData.hotphone $></a></span>
+                </div>
+            </div>
+            
+        
+                   
+        </header>

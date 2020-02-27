@@ -1,0 +1,75 @@
+{% extends "common/layout-back.html" %} 
+{% block body %}
+    <style>
+        body{
+            background: #333;
+            overflow-y: hidden;
+        }
+    </style>
+    <div class="login">
+        <div class="header">
+            <div class="headerRight">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <form class="layui-form" id="regularForm">
+        <div class="loginBody">
+            <h1>REG</h1>
+            <div class="layui-container">
+                    <div class="loginAccount">
+                        <i class="icon layui-icon">&#xe612;</i>
+                        <div class="input">
+                            <input type="text" class="layui-input" required  lay-verify="required" placeholder="昵称"  name="nickname">
+                        </div>
+                    </div>
+                    <div class="loginAccount">
+                        <i class="icon layui-icon">&#xe612;</i>
+                        <div class="input">
+                            <input type="text" class="layui-input" required maxlength="11" lay-verify="required|phone" placeholder="手机号"  name="username">
+                        </div>
+                    </div>
+                    <div class="loginAccount">
+                        <i class="icon layui-icon">&#xe64c;</i>
+                        <div class="input">
+                            <input type="password" class="layui-input" required lay-verify="required" placeholder="密码"   name="pwd">
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <div class="footer">
+            <h1 lay-submit lay-filter="reg">注册</h1>
+        </div>
+        </form>
+    </div>
+
+    
+
+    <script>
+       
+
+        layui.use(['form'],function () {
+            var form = layui.form;
+
+            form.on('submit(reg)',function (data) {
+                $.ajax({
+                    type:'POST',
+                    url:'/api/reg',
+                    datatype:'json',
+                    data:data.field,
+                    success:function(req){
+                        if(req.code == 200){
+                            $('#regularForm')[0].reset();
+                            layer.msg("成功！", {icon: 1, time: 1000});
+                        }else{
+                            layer.msg("失败，"+req.msg, {icon: 5, time: 1000});
+                        }
+                    }
+                })
+                return false
+            })
+        })
+    </script>
+    {% endblock %}

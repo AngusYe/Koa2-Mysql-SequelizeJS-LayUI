@@ -1,0 +1,67 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="layui-fluid">
+    <div id="edit-form" class="layui-form" style="padding: 20px 30px 0 0;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-inline">
+          <input type="text" name="title" lay-verify="required" placeholder="请输入名称" autocomplete="off"
+            class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button id="dosubmit" class="layui-btn">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    layui.use(['laydate', 'jquery', 'form'], function () {
+      var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+      //……
+      //但是，如果你的HTML是动态生成的，自动渲染就会失效
+      //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+      form.render();
+
+      var laydate = layui.laydate;
+      //执行laydate实例
+      //常规用法
+      laydate.render({
+        elem: '#start-date'
+      });
+      laydate.render({
+        elem: '#end-date'
+      });
+    });
+
+    $("#dosubmit").click(function () {
+      layer.msg('操作成功');
+      setTimeout(function () {
+        parent.location.reload(); //刷新父窗口
+        parent.layer.closeAll(); //关闭所有layer窗口
+      }, 1000);
+      return false;
+      var targetUrl = $("#edit-form").attr("action");
+      var data = $("#edit-form").serialize();
+      $.ajax({
+        type: 'post',
+        url: targetUrl,
+        cache: false,
+        data: data, //重点必须为一个变量如：data
+        dataType: 'json',
+        success: function (data) {
+          layer.msg('操作成功');
+          setTimeout(function () {
+            parent.location.reload(); //刷新父窗口
+            parent.layer.closeAll(); //关闭所有layer窗口
+          }, 1000);
+        },
+        error: function () {
+          alert('请求失败');
+        }
+      });
+    });
+  </script>
+{% endblock %}

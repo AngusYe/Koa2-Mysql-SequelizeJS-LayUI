@@ -1,0 +1,73 @@
+{% extends "common/layout.html" %} 
+{% block head %}
+<link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+<script type="text/javascript" src="/lib/layui/layui.js"></script>
+{% endblock %}
+{% block body %}	
+			
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_pro.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		{% include "common/product_bar.html" %} 
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}产品展示{% else %}PRODUCTS{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> > <a href="/product">{% if language=='cn' %}产品展示{% else %}Products{% endif %}</a></span>
+			</div>
+			<ul class="pro_ul clearfix">
+				{% for item in productList.data %}
+				<li>
+					<a href="/proshow?procode=<$ item.id $>&serise=<$ item.seriseid $>">
+						<div class="pic">
+						<img src="<$ base_url $><$ item.pastcover $>" alt="" class="vbgcenter" />
+						<i></i>
+						<a href="/proshow?procode=<$ item.id $>&serise=<$ item.seriseid $>" class="zhe_a fadeInq">
+							<img src="/img/pro_sou.png" alt=""  class="vcenter"/>	
+						</a>
+						</div>
+						<div class="text">
+							<h4>{% if language=='cn' %}<$ item.proname $>{% else %}<$ item.enproname $>{% endif %} </h4>
+							<span></span>
+							<a href="/proshow?procode=<$ item.id $>&serise=<$ item.seriseid $>" class="more">MORE ></a>
+						</div>
+					</a>
+				</li>	
+				{% endfor %}
+			</ul>
+			<div id="navpage"></div>
+			{% include "common/news_bar.html" %}
+		</div>
+		
+	</div>
+
+	<script>
+		$(function(){
+			layui.use(['laypage','element'],function () {
+				var laypage = layui.laypage;
+				laypage.render({
+					elem: 'navpage'
+					,count: <$ productList.total $>
+					,limit:6
+					,pages:<$ productList.total_pages $>
+					,first: {% if language=='cn' %}'首页'{% else %}'HOME'{% endif %}
+					,last: {% if language=='cn' %}'尾页'{% else %}'Last'{% endif %}
+					,layout: ['prev', 'page', 'next','count']
+					,theme:'#0083c7'
+					,curr: getParam('page') //获取起始页
+					,jump: function(e, first){ 
+						if(!first){  
+							if(getParam('serise')){
+								location.href = '?page='+e.curr+'&serise='+getParam('serise')
+							}else{
+								location.href = '?page='+e.curr
+							}
+							
+						} 
+					} 
+				});
+			})
+		})
+	</script>
+	{% endblock %}

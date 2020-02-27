@@ -1,0 +1,117 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="layui-fluid" style="margin-top:15px;">
+
+    <div class="layui-row">
+      <div class="layui-col-lg6 layui-col-md12">
+        <blockquote class="layui-elem-quote" style="padding:10px 15px;margin-bottom:0;">服务器信息</blockquote>
+        <table class="layui-table" style="margin-top:0;">
+          <tbody>
+            <tr>
+              <td>服务器IP地址</td>
+              <td>192.168.1.1</td>
+            </tr>
+            <tr>
+              <td>服务器端口 </td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>当前时间 </td>
+              <td id="nowTime">2018-01-01 13:14:00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <blockquote class="layui-elem-quote" style="padding:10px 15px;margin-bottom:0;">最新文章</blockquote>
+        <table class="layui-table" style="margin-top:0;">
+          <colgroup>
+            <col>
+            <col width="110">
+          </colgroup>
+          <tbody class="hot_news">
+            {% for item in news.data %}
+            <tr>
+              <td align="left"><a href="/news_show?id=<$ item.id $>" target="_blank"><$ item.title $></a></td>
+              <td><$ item.createdAt|dayearmonth $></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="layui-col-lg6 layui-col-md12">
+        <div style="margin-left:10px;border:1px solid #e6e6e6;">         
+          <style>
+            .admin-shortcut li {
+              text-align: center;
+            }
+
+            .admin-shortcut li .layui-icon {
+              display: inline-block;
+              width: 100%;
+              height: 60px;
+              line-height: 60px;
+              text-align: center;
+              border-radius: 2px;
+              font-size: 30px;
+              background-color: #F8F8F8;
+              color: #333;
+              transition: all .3s;
+              -webkit-transition: all .3s;
+            }
+
+            .admin-shortcut li cite {
+              position: relative;
+              top: 2px;
+              display: block;
+              color: #666;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              font-size: 14px;
+            }
+
+            .admin-shortcut li:hover .layui-icon {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /**
+     * 初始化函数
+     */
+     setDate();
+
+    /**
+     * 获取当前时间
+     */
+    var nowDate1 = "";
+    function setDate() {
+        var date = new Date();
+        var year = date.getFullYear();
+        nowDate1 = year + "-" + addZero((date.getMonth() + 1)) + "-" + addZero(date.getDate()) + "  ";
+        nowDate1 += addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":" + addZero(date.getSeconds());
+        document.getElementById("nowTime").innerHTML = nowDate1;
+        setTimeout('setDate()', 1000);
+    }
+
+    /**
+     * 年月日是分秒为10以下的数字则添加0字符串
+     * @param time
+     * @returns {number | *}
+     */
+    function addZero(time) {
+        var i = parseInt(time);
+        if (i / 10 < 1) {
+            i = "0" + i;
+        }
+        return i;
+    }
+  </script>
+{% endblock %}

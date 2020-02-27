@@ -1,0 +1,27 @@
+{
+    "apps" : [
+        {
+          "name"        : "keson",
+          // 编译版本的 app 的入口
+          "script"      : "app.js",
+          // 在生产环节不用兼听文件的变化
+          "watch"       : false,
+          // 合并搜索实例产生的日志
+          "merge_logs"  : true,
+          "instance_var": "INSTANCE_ID",
+          // 日志详情加上自定义的时间戳格式
+          "log_date_format": "YYYY-MM-DD HH:mm Z",
+          "env": {
+            // app 所需的环境变量
+            "NODE_ENV": "prd",
+            "PORT": 3099
+          },
+          // 为 app 启动两个进程，并均衡负载。
+          "instances": 2,
+          // 以 cluster 方式启动 app
+          "exec_mode"  : "cluster_mode",
+          // 监听程序错误自动重启进程
+          "autorestart": true
+        }
+    ]
+  }

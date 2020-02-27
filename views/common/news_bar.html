@@ -1,0 +1,17 @@
+<div class="guan_new">
+        <div class="guan_top">
+            <span>{% if language=='cn' %}新闻资讯{% else %}News{% endif %}</span>
+        </div>
+        <ul class="guan_ul">
+            {% for item in news.data %}
+            <li>
+                <a href="/news">
+                    <time><$ item.createdAt|dayearmonth $></time>
+                    <h4>{% if language=='cn' %}<$ item.title $>{% else %}<$ item.entitle $>{% endif %}</h4>
+                    <div class="wen_zi_nei">{% if language=='cn' %}<$ item.content|safe $>{% else %}<$ item.encontent|safe $>{% endif %}</div>
+                    <span class="more">MORE</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>

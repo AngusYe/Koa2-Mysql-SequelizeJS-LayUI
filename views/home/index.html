@@ -1,0 +1,263 @@
+{% extends "common/layout.html" %} 
+	{% block body %}	
+	<!--banner-->
+	<section class="banner">
+		{% for item in overAllData.banner|shorten %}
+	  	<div><a href="javascript:;"><img src="<$ item.url $>" alt="" /></a></div>
+	  	{% endfor %}
+	</section>
+	
+	<!--pro-->
+	<div class="home_pro">
+		<div class="pro_nei">
+			<div class="top_all">
+				<h3 style="width:230px;">{% if language=='cn' %}基胜电子做什么{% else %}PRODUCTS{% endif %}</h3>
+				<span>打造行业标准化建设优势品牌，为全球客户提供最优质的产品和全方位的技术支持。</span> 
+			</div>
+			{% macro productFront(type) %}
+				{% for item in productfront %}
+					{% if type == 1 %}
+						{% if item.bigfront == 1 %}
+						<img src="<$ item.pastcover $>" alt="" class="vcenter" />
+						<i></i>
+						<a href="/product?serise=<$ item.seriseid $>" class="zhe_a slideExpandUp">
+							<img src="/img/lian.png" alt="" />
+							{% if language=='cn' %}
+							<span class="zw"><$ item.serisename $>系列</span>
+							<!-- <span class="yw"><$ item.enproname $></span> -->
+							{% else %}
+							<span class="zw"><$ item.enproname $></span>
+							{% endif %}
+							
+						</a>
+						{% endif %}
+					{% else %}
+						{% if item.frontwz == 2 %}
+						<li>
+							<div class="pic">
+								<img src="<$ item.pastcover $>" alt=""class="vcenter" />
+								<i></i>
+							</div>
+							<a href="/product?serise=<$ item.seriseid $>" class="zhe_a slideExpandUp">
+								<img src="/img/lian.png" alt="" />
+								{% if language=='cn' %}
+								<span class="zw"><$ item.serisename $>系列</span>
+								<!-- <span class="yw"><$ item.enproname $></span> -->
+								{% else %}
+								<span class="zw"><$ item.enproname $></span>
+								{% endif %}
+							</a>
+						</li>	
+						{% elif item.frontwz == 3 %}
+						<li>
+							<div class="pic">
+								<img src="<$ item.pastcover $>" alt=""class="vcenter" />
+								<i></i>
+							</div>
+							<a href="/product?serise=<$ item.seriseid $>" class="zhe_a slideExpandUp">
+								<img src="/img/lian.png" alt="" />
+								{% if language=='cn' %}
+								<span class="zw"><$ item.serisename $>系列</span>
+								<!-- <span class="yw"><$ item.enproname $></span> -->
+								{% else %}
+								<span class="zw"><$ item.enproname $></span>
+								{% endif %}
+								
+							</a>
+						</li>
+						{% elif item.frontwz == 4 %}
+						<li>
+							<div class="pic">
+								<img src="<$ item.pastcover $>" alt=""class="vcenter" />
+								<i></i>
+							</div>
+							<a href="/product?serise=<$ item.seriseid $>" class="zhe_a slideExpandUp">
+								<img src="/img/lian.png" alt="" />
+								{% if language=='cn' %}
+								<span class="zw"><$ item.serisename $>系列</span>
+								<!-- <span class="yw"><$ item.enproname $></span> -->
+								{% else %}
+								<span class="zw"><$ item.enproname $></span>
+								{% endif %}
+								
+							</a>
+						</li>
+						{% elif item.frontwz == 5 %}
+						<li>
+							<div class="pic">
+								<img src="<$ item.pastcover $>" alt=""class="vcenter" />
+								<i></i>
+							</div>
+							<a href="/product?serise=<$ item.seriseid $>" class="zhe_a slideExpandUp">
+								<img src="/img/lian.png" alt="" />
+								{% if language=='cn' %}
+								<span class="zw"><$ item.serisename $>系列</span>
+								<!-- <span class="yw"><$ item.enproname $></span> -->
+								{% else %}
+								<span class="zw"><$ item.enproname $></span>
+								{% endif %}
+								
+							</a>
+						</li>
+						{% endif %}
+
+					{% endif %}
+				{% endfor %}
+			{% endmacro %}
+			<div class="pro_com clearfix">
+				<div class="p_left wow bounceInLeft">
+					<$ productFront(1) $>
+				</div>
+				<div class="p_right wow bounceInRight">
+					<ul class="clearfix">
+						<$ productFront(2) $>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!--about-->
+	<div class="home_about">
+		<div class="about_com clearfix">
+			<div class="a_left wow bounceInLeft">
+				<div class="ab_bg">
+					<i></i>
+				</div>
+				<div class="pic">
+					<img src="/img/about01.jpg" alt="" class="vcenter" />
+					<i></i>
+				</div>
+			</div>
+			<div class="a_right wow bounceInRight">
+				<div class="span_y">
+					COMPANY PROFILE
+				</div>
+				<div class="span_z">
+					{% if language=='cn' %}公司简介{% endif %}
+				</div>
+				<div class="a_r_content">
+					{% if language=='cn' %}
+					<$ aboutUs.content|safe $>
+					{% else %}
+					<$ aboutUs.encontent|safe $>
+					{% endif %}
+				</div>
+				<a href="/about" class="more">{% if language=='cn' %}查看更多{% else %}VIEW MORE{% endif %} →</a>
+				
+			</div>
+		</div>
+	</div>
+	<div class="ne-wh wow fadeInDown pc-box">
+		<div class="w85">
+			<dl>
+				<dt>
+					<img src="../img/wh01.png"></dt>
+				<dd>
+					<p>{% if language=='cn' %}企业文化{% else %}Culture{% endif %}</p>
+					{% if language=='cn' %}
+					<span>服务理念：优质、快速、高性价比<br>
+						质量方针：以科技为动力，以质量求生存<br>
+						企业宗旨：为客户创造价值；为员工创造机会；为社会创造财富   
+						<br>
+						企业精神：赤诚自信，卓越创新</span>
+					{% else %}
+					<span>Service concept: high quality, fast and cost-effective<br>
+						Quality policy: technology as the driving force, quality for survival<br>
+						Enterprise purpose: to create value for customers; Create opportunities for employees; Create wealth for society   
+						<br>
+						Enterprise spirit: absolute sincerity self-confidence, outstanding innovation</span>
+					{% endif %}
+					
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<dl>
+				<dt>
+					<img src="../img/wh02.png"></dt>
+				<dd>
+					<p>{% if language=='cn' %}团队精神{% else %}Team Spirit{% endif %}</p>
+					{% if language=='cn' %}
+					<span>简单：人与人之间交流的简单，追求设计产品的简单。<br>
+						正直：信守承诺，做正直的事，做正直的人。<br>
+						创新：创新是进步的灵魂，勇与尝试，大胆想象。<br>
+						极致：从优秀走向卓越，不断超越，锐意进取。<br>
+						成长：广阔的成长空间，让成长进步贯穿基胜电子每一天。</span>
+					{% else %}
+					<span>Simplicity: the simplicity of interpersonal communication and the simplicity of product design.<br>
+						Integrity: keep your word, do the right thing, be the right person.<br>
+						Innovation: innovation is the soul of progress, courage and experiment, bold imagination<br>
+						Acme: from excellent to excellent, constantly beyond, forge ahead<br>
+						Growth: broad space for growth, let the growth and progress of ji sheng electronics every day</span>
+					{% endif %}
+				</dd>
+				<div class="clear"></div>
+			</dl>
+			<div class="clear"></div>
+		</div>
+	</div>
+	 <div class="home_news">
+	 	<div class="news_com">
+	 		<div class="top_all">
+				<h3>{% if language=='cn' %}新闻资讯{% else %}NEWS AND INFORMATION{% endif %}</h3>
+				<span>NEWS AND INFORMATION</span> 
+			</div>
+			<div class="news_nei clearfix">
+				<div class="n_left  wow bounceInLeft">
+					<div class="imgd">
+						<a href="/news_show?id=<$ lastnews.id $>&type=<$ lastnews.type $>"><img src="/img/news1.jpg" alt="" class="vcenter" /></a>
+						<i></i>
+						<span class="ri">
+							<i><$ lastnews.createdAt|day $></i>
+							<time><$ lastnews.createdAt|yearmonth $></time>
+						</span>
+						
+					</div>
+					<h4><a href="{% if lastnews.type == 1 %}/news{% else %}/tradenews{% endif %}">{% if language=='cn' %}<$ lastnews.title $>{% else %}<$ lastnews.entitle $>{% endif %}</a></h4>
+						<div class="wen_zi_nei">{% if language=='cn' %}<$ lastnews.content|safe $>{% else %}<$ lastnews.encontent|safe $>{% endif %}</div>
+						<a href="{% if lastnews.type == 1 %}/news{% else %}/tradenews{% endif %}" class="more">{% if language=='cn' %}查看更多{% else %}VIEW MORE{% endif %}>></a>
+				</div>
+				<div class="n_right">
+					<ul>
+						{% for item in news.data %}
+						<li class="clearfix wow bounceInRight"  data-wow-delay="<$ 0.5*loop.index $>s">
+							<a href="/news_show?id=<$ item.id $>">
+							<span class="ri">
+								<i><$ item.createdAt|day $></i>
+								<time><$ item.createdAt|yearmonth $></time>
+							</span>
+							<div class="wen_nei">
+								<h4>{% if language=='cn' %}<$ item.title $>{% else %}<$ item.entitle $>{% endif %}</h4>
+								<div class="wen_zi_nei">{% if language=='cn' %}<$ item.content|safe $>{% else %}<$ item.encontent|safe $>{% endif %}</div>
+							</div>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			
+			<!-- <div class="links clearfix">
+				<span>
+					友情链接
+				</span>
+				<div class="link_a">
+					<a href="">上海官网 </a> |
+				<a href="">我们的专业团队 </a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|	
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|
+				<a href="">上海官网</a>|				
+				<a href="">上海官网</a>			
+				</div>				
+			</div> -->
+	 	</div>
+	 </div>					
+{% endblock %}

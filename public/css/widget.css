@@ -1,0 +1,12 @@
+.home-top-grid1 {
+  background: rgba(11, 100, 143, 0.7);
+  transition: 0.5s all;
+}
+.home-top-grid2 {
+  background: rgba(226, 23, 55, 0.5);
+  transition: 0.5s all;
+}
+.home-top-grid3 {
+  background: rgba(11, 100, 143, 0.4);
+  transition: 0.5s all;
+}

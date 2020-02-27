@@ -1,0 +1,138 @@
+<div class="footer">
+		<div class="footer_com clearfix">
+			<ul class="di_nav">
+				<li>
+					<a href="/about" class="tit">{% if language=='cn' %}关于我们{% else %}ABOUT{% endif %}</a>
+					<a href="/about">{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</a>
+					<a href="/speech">{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</a>
+					<a href="/culture">{% if language=='cn' %}企业文化{% else %}Company culture{% endif %}</a>
+					<a href="/mien">{% if language=='cn' %}基胜风采{% else %}Keson Mien{% endif %}</a>
+				</li>
+				<li>
+					<a href="/product" class="tit">{% if language=='cn' %}产品展示{% else %}Products{% endif %}</a>
+					<a href="/product">DVD</a>
+					<a href="/product">{% if language=='cn' %}扬声器{% else %}Speaker{% endif %} </a>
+					<a href="/product">{% if language=='cn' %}车载多媒体{% else %}Car player{% endif %} </a>
+				</li>
+				<li>
+					<a href="/news" class="tit">{% if language=='cn' %}新闻资讯{% else %}News{% endif %}</a>
+					<a href="/news">{% if language=='cn' %}公司新闻{% else %}Company{% endif %}</a>
+					<a href="/tradenews">{% if language=='cn' %}行业新闻{% else %}Trade{% endif %}</a>
+				</li>
+				
+				<li>
+					<a href="/contact" class="tit">{% if language=='cn' %}联系我们{% else %}Connect{% endif %}</a>
+					<a href="/contact">{% if language=='cn' %}联系方式{% else %}Contact{% endif %}</a>
+	    			<a href="/feedback">{% if language=='cn' %}在线留言{% else %}Feedback{% endif %}</a>    	
+				</li>
+			</ul>
+			<div class="er_right">
+				<div class="er" style="display:none;">
+					<div class="pic">
+						<img src="<$ base_url $><$ overAllData.ewm $>" alt="" class="vcenter" />
+						<i></i>
+					</div>
+					<div class="text">
+						<span>{% if language=='cn' %}微信公众平台{% else %}WeChat Platform{% endif %}</span>
+						<span>{% if language=='cn' %}关注官网{% else %}Focus Ours{% endif %}</span>
+					</div>
+				</div>
+				<div class="dian">
+					<span>{% if language=='cn' %}服务咨询热线{% else %}Enquiry Hotline{% endif %}</span>
+					<a href="tel:<$ overAllData.hotphone $>"><$ overAllData.hotphone $></a>
+				</div>
+			</div>
+			
+		</div>
+		<div class="copy clearfix">
+				<span> Copyright(c)2019 深圳市基胜电子有限公司官网 <a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备19132824号</a>  </span>
+			<!-- <a href="/map" class="amap">站点地图 ｜</a> <span> Copyright(c)2015-2024 官网   </span> <div class="y_a"><a href="map" class="map">站点地图</a></div> -->
+		</div>
+	</div>
+	
+	<!--移动端底部导航-->
+	<div class="phonefooternav">
+		<ul class="clearfix">
+			<li>
+				<a href="tel:<$ overAllData.hotphone $>">
+					<i class="iconfont">&#xe60c;</i>
+					<span>{% if language=='cn' %}一键电话{% else %}Hot Phone{% endif %}</span>
+				</a>
+			</li>
+			<li>
+				<a href="/feedback">
+					<i class="iconfont">&#xe683;</i>
+					<span>{% if language=='cn' %}在线留言{% else %}Feedback{% endif %}</span>
+				</a>
+			</li>
+			<li>
+				<a href="/contact">
+					<i class="iconfont">&#xe61d;</i>
+					<span>{% if language=='cn' %}联系我们{% else %}Connect{% endif %}</span>
+				</a>
+			</li>
+			<li>
+				<a href="/">
+					<i class="iconfont">&#xe607;</i>
+					<span>{% if language=='cn' %}返回首页{% else %}Home{% endif %}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!--移动端  Mmenu-->
+	<nav id="mmenu">
+		<ul>
+			<li class="clear zy_q">
+				<a href="" class="left">简体中文</a>
+				<a href="" class="left">English</a>
+			</li>
+			<li><a href="/">{% if language=='cn' %}首页{% else %}HOME{% endif %}</a></li>
+			<li><a href="/about">{% if language=='cn' %}关于我们{% else %}ABOUT{% endif %}</a>
+				<ul>
+					<li><a href="/about">{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</a></li>
+					<li><a href="/speech">{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</a></li>
+					<li><a href="/culture">{% if language=='cn' %}企业文化{% else %}Company culture{% endif %}</a></li>
+					<li><a href="/honor">{% if language=='cn' %}荣誉资质{% else %}Honor{% endif %}</a></li>
+					<li><a href="/mien">{% if language=='cn' %}基胜风采{% else %}Keson Mien{% endif %}</a></li>
+				</ul>
+			</li>
+			<li><a href="/product">{% if language=='cn' %}产品展示{% else %}Products{% endif %}</a></li>
+			<li><a href="/news">{% if language=='cn' %}新闻资讯{% else %}News{% endif %}</a></li>
+			<li><a href="/contact">{% if language=='cn' %}联系我们{% else %}Connect{% endif %}</a>
+				<ul>
+					<li><a href="/contact">{% if language=='cn' %}联系方式{% else %}Contact{% endif %}</a></li>
+					<li><a href="/feedback">{% if language=='cn' %}在线留言{% else %}Feedback{% endif %}</a></li>
+				</ul>
+			</li>
+		</ul>
+	</nav>	
+		
+<!--移动端导航-->
+<script src="/js/jquery.mmenu.all.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/wow.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/public.js" type="text/javascript" charset="utf-8"></script>
+
+<!--slick-->
+<script src="/js/slick.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!--placeholder-->
+<script src="/js/jquery.placeholder.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	   
+	$(".banner").slick({
+			fade: false,
+			
+			autoplay:true,
+			autoplaySpeed:5000,
+			arrows: false,
+			dots:false,
+		
+	})
+
+	$(function(){ $('input, textarea').placeholder(); });
+	if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+		new WOW().init();
+	};
+	
+</script>
+	

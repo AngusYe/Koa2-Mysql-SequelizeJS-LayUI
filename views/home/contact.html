@@ -1,0 +1,85 @@
+{% extends "common/layout.html" %} 
+	{% block body %}
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_contact.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		<div class="zi_left">
+			<div class="top">
+				<span class="span1">{% if language=='cn' %}联系我们{% else %}CONTACT{% endif %}</span>
+				<span  class="span2">{% if language=='cn' %}CONTACT{% endif %}</span>
+			</div>
+			<ul>
+				<li  class="active">
+					<a href="/contact">{% if language=='cn' %}联系我们{% else %}Contact{% endif %}</a>
+				</li>
+				<li>
+					<a href="/feedback">{% if language=='cn' %}在线留言{% else %}feedback{% endif %}</a>
+				</li>					
+				
+			</ul>
+		</div>
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}联系我们{% else %}CONTACT{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> ><i>{% if language=='cn' %}联系我们{% else %}Contact{% endif %}</i></span>
+			</div>
+			<div class="contact_zi">
+				<div class="contact_map">
+				<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6d88e38ab7f507ee19cec46443691d95"></script>
+					<div id="map"></div>
+					<script type="text/javascript">
+
+			    // 百度地图API功能
+			    var map = new BMap.Map("map");    // 创建Map实例
+			    var point = new BMap.Point(113.810995,22.68683);   //坐标拾取网址：http://api.map.baidu.com/lbsapi/getpoint/index.html
+			
+			    var marker = new BMap.Marker(point);  // 创建标注
+			    var mapStyle = {style:"normal"};
+    			map.setMapStyle(mapStyle);
+
+			    var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+			    var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+			
+			    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+			    map.centerAndZoom(point, 17);  // 初始化地图,设置中心点坐标和地图级别
+			    map.addOverlay(marker);               // 将标注添加到地图中
+			    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+			    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+			    map.setCurrentCity("深圳");          // 设置地图显示的城市 此项是必须设置的
+				
+			
+			
+			    window.onresize = function(){
+			
+			        map.centerAndZoom(point, 15);  // 重置窗口的时候 重新获取中心点坐标的位置
+			
+			    }
+
+		    map.addControl(top_left_control);
+		    map.addControl(top_left_navigation);
+		    /*map.addControl(top_right_navigation);  */
+			</script>
+			</div>
+			<div class="cont_text">
+				<span>
+					TEl:<a href="tel:<$ overAllData.hotphone $> "><$ overAllData.hotphone $> </a>
+				</span>
+				<p>
+					{% if language=='cn' %}邮 箱{% else %}Email{% endif %}：<a href="<$ overAllData.email $>"><$ overAllData.email $></a>
+
+				</p>
+				<p>
+					{% if language=='cn' %}地 址：<$ overAllData.address $> {% else %}Address：<$ overAllData.enaddress $> {% endif %}	
+				</p>
+			</div>
+			</div>
+			{% include "common/news_bar.html" %}
+		</div>
+		
+	</div>
+	
+	
+	
+	{% endblock %}

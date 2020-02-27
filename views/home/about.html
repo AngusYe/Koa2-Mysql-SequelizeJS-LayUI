@@ -1,0 +1,88 @@
+{% extends "common/layout.html" %} 
+{% block body %}	
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_about.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		{% include "common/about_bar.html" %}
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> > <a href="/about">{% if language=='cn' %}关于我们{% else %}About Us{% endif %}</a> > <i>{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</i></span>
+			</div>
+			<div class="about_zi">
+				<div class="ab_img">
+					<img src="/img/about_1.png" alt="" class="vcenter"/>
+					<i></i>
+				</div>
+				<div>
+					{% if language=='cn' %}<$ aboutUs.content|safe $>{% else %}<$ aboutUs.encontent|safe $>{% endif %}
+					
+				</div>
+				<ul class="about_ul">
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}公司定位{% else %}Positioning{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}我们是一个狼的团队{% else %}We are a team of wolf{% endif %}</h4>
+							<h6>{% if language=='cn' %}We are a team of wolf{% else %}我们是一个狼的团队{% endif %}</h6>
+						</div>
+					</li>
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}愿景{% else %}Vision{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}我们是一个专业的团队{% else %}We are a professional team{% endif %}</h4>
+							<h6>{% if language=='cn' %}We are a professional team{% else %}我们是一个专业的团队{% endif %}</h6>
+						</div>
+					</li>
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}使命{% else %}Mission{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}客户满意凝结着我们所有官网人的辛勤努力{% else %}Customer satisfaction condensation of all of our people's hard work Jindo{% endif %}</h4>
+							<h6>{% if language=='cn' %}Customer satisfaction condensation of all of our people's hard work Jindo{% else %}客户满意凝结着我们所有官网人的辛勤努力{% endif %}</h6>
+						</div>
+					</li>
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}目标{% else %}Target{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}精益求精是我们的追求{% else %}Excellence is our pursuit{% endif %} </h4>
+							<h6>{% if language=='cn' %}Excellence is our pursuit{% else %}精益求精是我们的追求{% endif %}</h6>
+						</div>
+					</li>
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}信念{% else %}Belief{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}以人为本、追求卓越品质{% else %}People-oriented, the pursuit of excellence{% endif %}</h4>
+							<h6>{% if language=='cn' %}People-oriented, the pursuit of excellence{% else %}以人为本、追求卓越品质{% endif %}</h6>
+						</div>
+					</li>
+					<li class="clearfix">
+						<span class="quan">
+							{% if language=='cn' %}纲领{% else %}Creed{% endif %}
+						</span>
+						<div class="wen">
+							<h4>{% if language=='cn' %}基胜让我们一起实现梦想，成就美好未来{% else %}Jindo let us achieve dreams, bright future together{% endif %}</h4>
+							<h6>{% if language=='cn' %}Jindo let us achieve dreams, bright future together{% else %}基胜让我们一起实现梦想，成就美好未来{% endif %}</h6>
+						</div>
+					</li>
+				
+				</ul>
+			</div>
+			{% include "common/news_bar.html" %}
+		</div>
+		
+	</div>
+	
+	
+	
+	{% endblock %}

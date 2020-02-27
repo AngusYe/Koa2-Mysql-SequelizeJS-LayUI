@@ -1,0 +1,180 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="admin-content-box-nav">
+    <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+      <a href="javascript:;">首页</a><span lay-separator="">/</span>
+      <a href="javascript:;">产品中心</a><span lay-separator="">/</span>
+      <a><cite>产品系列</cite></a>
+    </span>
+  </div>
+
+  <div class="layui-row" style="padding:15px;border-bottom:1px solid #f6f6f6;">
+    <form class="layui-form layui-col-md12" id="search_form">
+      搜索：
+      <div class="layui-inline">
+        <input type="text" name="serisename" placeholder="请输入系列名" autocomplete="off" class="layui-input">
+      </div>
+      <button class="layui-btn" lay-submit="" lay-filter="search"><i class="layui-icon layui-icon-search"></i></button>
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search_reset">
+            <i class="layui-icon layui-icon-refresh"></i>
+        </button>
+    </form>
+  </div>
+
+  <div class="layui-fluid">
+    <div style="padding-top:15px;padding-bottom:5px;">
+      <button class="layui-btn layui-btn-danger" data-type="getCheckData" id="batchDel"><i
+          class="layui-icon layui-icon-delete"></i>批量删除</button>
+      <button class="layui-btn" id="addArticle"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+      <span class="fr" style="line-height:40px">共有数据：<font id="countNum"></font> 条</span>
+    </div>
+
+    <div class="layui-form">
+      <table class="layui-table" id="retularTable" lay-filter="tableFilter"></table>
+    </div>
+  </div>
+  <script>
+      layui.use(['laydate', 'table', 'form'], function () {
+          var form = layui.form; 
+          var table = layui.table;
+          var laydate = layui.laydate;
+
+          //执行laydate实例
+          //常规用法
+          laydate.render({
+            elem: '#start-date'
+          });
+          laydate.render({
+            elem: '#end-date'
+          });
+
+
+          //article list
+          function getretularTableList(param) {
+              table.render({
+                  elem: '#retularTable',
+                  url: '/api/seriselist',
+                  method:'post',
+                  contentType: 'application/json',
+                  where:param,
+                  headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+                  limit: 10,
+                  limits:false,
+                  page: true,
+                  even: true,
+                  cols: [[
+                      {type: 'checkbox'},
+                      {field: 'index', title: '序号', width: 80, templet: '#xuhaoTpl'},
+                      {field: 'name', title: '产品系列名', width: 300},
+                      {field: 'updatedAt', title: '创建时间', width: 300},
+                      {title: '操作', width: 200, templet: '#articleTpl' , align: 'center'}
+                  ]],
+                  done: function (res, curr, count) {
+                      $("#countNum").text(count);
+                  }
+              });
+          }
+          getretularTableList()
+
+          table.on('tool(tableFilter)', function (obj) {
+              var data = obj.data;
+              var layEvent = obj.event;
+              if (layEvent === 'edit') {
+                layer.open({
+                    title: '编辑产品系列',
+                    type: 2,
+                    shade: false,
+                    maxmin: true,
+                    shade: 0.5,
+                    area: ['90%', '90%'],
+                    content: '/backend/serise_add?id='+data.id,
+                    zIndex: layer.zIndex,
+                    end: function () {
+                        //table.reload('tableId')
+                    }
+                });
+              } else if (layEvent === 'del') {
+                  layer.confirm("确定要删除吗？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                      deleteMsg({id:data.id})
+                      layer.closeAll();
+                  });
+              }
+          });
+
+
+          $('#addArticle').click(function () {
+              layer.open({
+                  title: '添加产品系列',
+                  type: 2,
+                  shade: false,
+                  maxmin: true,
+                  shade: 0.5,
+                  area: ['90%', '90%'],
+                  content: '/backend/serise_add',
+                  zIndex: layer.zIndex,
+                  end: function () {
+                      table.reload('retularTable')
+                  }
+              });
+          })
+
+
+
+          //删除文章
+          function deleteMsg(param) {
+            AjaxBox('/api/serisedel',param,function () {
+                layer.msg("成功！", {icon: 1, time: 1000});
+                table.reload('retularTable')
+            })
+          }
+
+
+          //批量删除
+        $('#batchDel').click(function(){
+            var checkStatus = table.checkStatus('retularTable')
+                  ,data = checkStatus.data;
+              var saleidArr = [];
+              $.each(data,function(index,item){
+                  saleidArr.push(item.id)
+              })
+              layer.confirm("确定删除这"+data.length+"条数据？", {skin: 'layui-layer-lan', icon: 2, title: '提示'}, function () {
+                  deleteMsg({id:saleidArr})
+              });
+        })
+
+
+        form.on('submit(search)', function (data) {
+            getretularTableList(data.field)
+            return false;
+        });
+
+
+        form.on('submit(search_reset)', function (data) {
+            $('#search_form')[0].reset()
+            getretularTableList()
+            return false;
+        });
+
+
+
+
+
+      });
+
+
+      
+  </script>
+  <!-- tpl tool -->
+  <script type="text/html" id="xuhaoTpl">
+    {{d.LAY_INDEX}}
+  </script>
+  <script type="text/html" id="articleTpl">
+      <a href="javascript:;" class="layui-btn layui-btn-normal layui-btn-xs" title="编辑" lay-event="edit">
+        <i class="layui-icon layui-icon-edit"></i>
+      </a> 
+      <a class="layui-btn layui-btn-danger layui-btn-xs" title="删除" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+      </a>
+  </script>
+{% endblock %}

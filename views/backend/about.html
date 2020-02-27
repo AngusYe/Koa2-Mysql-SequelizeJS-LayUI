@@ -1,0 +1,94 @@
+
+{% extends "common/layout-back.html" %} 
+
+{% block body %}
+    <!--面包屑导航区域-->
+    <div class="admin-content-box-nav">
+        <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+          <a href="javascript:;">首页</a><span lay-separator="">/</span>
+          <a href="javascript:;">关于我们</a><span lay-separator="">/</span>
+          <a><cite>公司简介</cite></a>
+        </span>
+      </div>
+    
+    
+    <!--form表单-->
+    <form class="layui-form" wid200="" id="regularForm" lay-filter="regularform">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>{% if aboutId == 1 %}公司简介{% elif aboutId == 2 %}董事长致辞{% elif aboutId == 3 %}荣誉资质{% elif aboutId == 4 %}企业文化{% endif %}</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label">中文：</label>
+            <div class="layui-input-block">
+                <textarea id="edit" name="content" style="display: none;"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">英文：</label>
+            <div class="layui-input-block">
+                <textarea id="enedit" name="encontent" style="display: none;"></textarea>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="regualrSub">立即提交</button>
+            </div> 
+        </div>
+    </form>
+<!--js逻辑-->
+<script>
+    var cardImg,ewmUrl
+    layui.use(['element', 'form', 'jquery','upload','layedit','layer'], function () {
+            var element = layui.element;
+            var form = layui.form;
+            var $ = layui.jquery;
+            var upload = layui.upload;
+            var layedit = layui.layedit;
+            var layer = layui.layer;
+
+            layedit.set({
+                uploadImage: {
+                    url: '/api/uploadfiles' //接口url
+                    ,type: 'post' //默认post
+                    ,headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`}
+                }
+            });
+
+
+
+            var editIndex = layedit.build('edit',{
+                hideTool:['link','unlink','image'],
+            }); //建立编辑器
+
+            var eneditIndex = layedit.build('enedit',{
+                hideTool:['link','unlink','image'],
+            }); //建立编辑器
+            
+            form.render();
+
+            AjaxBox('/api/aboutinfo',{typeid:<$ aboutId $>},function(req){
+                if(req.data){
+                    layedit.setContent(editIndex,req.data.content)
+                    layedit.setContent(eneditIndex,req.data.encontent)
+                }
+            })
+
+           
+            form.on('submit(regualrSub)', function (data) {
+                
+                var content = layedit.getContent(editIndex);
+                var encontent = layedit.getContent(eneditIndex);
+                data.field = Object.assign({},data.field,{content:content,encontent:encontent,typeid:<$ aboutId $>});
+                AjaxBox('/api/about',data.field,function(req){
+                    layer.msg('成功',{icon:1,time:1000})
+                })
+                return false;
+            });
+           
+            
+        })
+    
+</script>
+{% endblock %}

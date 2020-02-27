@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<title>深圳市基胜电子有限公司后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+	<link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="/css/backmain.css">
+	<script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/layui/layui.js"></script>
+    <script src="/js/backmain.js"></script>
+    {% block head %}{% endblock %}
+     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+        
+        {% block body %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+       <input type="hidden" id="base_url" value="<$ base_url $>">
+      
+    </body>
+</html>

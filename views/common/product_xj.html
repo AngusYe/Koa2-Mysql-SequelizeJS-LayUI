@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+<script type="text/javascript" src="/lib/layui/layui.js"></script>
+<div class="pro_jia">
+    <div class="guan_top">
+        <span>产品询价</span>
+    </div>
+    <div class="form_xj">
+        <form class="layui-form" id="regularForm">
+            <div class="inp_d">
+                <span>标题:</span>
+                <input type="text" name="title" placeholder="请输入标题"   lay-verify="required"/>
+                <i>*</i>
+            </div>
+            <div class="inp_d">
+                <span>联系人:</span>
+                <input type="text" name="name" placeholder="请输入联系人"   lay-verify="required" />
+                <i>*</i>
+            </div>
+            <div class="inp_d">
+                <span>手机:</span>
+                <input type="text" name="phone" placeholder="请输入手机号码" maxlength="11"  lay-verify="phone"   />
+                <i>*</i>
+            </div> 
+            <div class="inp_d">
+                <span>邮箱:</span>
+                <input type="text" name="email"  placeholder="请输入邮箱地址"    />
+            </div>
+            <div class="inp_d">
+                <span>内容:</span>
+                <textarea  name="content"  placeholder="如有特殊需求，请在这里面说明！该内容只有网站
+    管理员有权限阅览。"></textarea>
+            </div>
+            <div class="inp_d yan clearfix">
+                <span>验证码:</span>
+                <input type="text" placeholder="请输入验证码"  name="code" /><i>*</i>
+                <div id="imgcode" onclick="getCurCode()"></div><a onclick="getCurCode()">看不清，换一张</a>
+            </div>
+            <div class="inp_d tijiao clearfix">
+                <span></span>
+                <a class="res btn  active" lay-submit="" lay-filter="product">提 交</a>
+                
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    getCurCode()
+    layui.use(['form','element'],function () {
+       var form = layui.form;
+       form.on('submit(product)',function(data){
+           $.ajax({
+               type:'POST',
+               url:'/api/value',
+               dataType: "json",
+               data:data.field,
+               success:function(req){
+                   if(req.code == 200){
+                       form.render();
+                       layer.msg("成功！", {icon: 1, time: 1000});
+                       $("#regularForm")[0].reset();
+                       getCurCode()
+                       return false;
+                   }else{
+                       layer.msg("失败,"+req.msg, {icon: 5, time: 1000});
+                       return false;
+                   }
+               }
+           })
+        
+           return false;
+       })
+   })
+
+
+</script>

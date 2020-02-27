@@ -1,0 +1,137 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+	
+	<!-- 顶部开始 -->
+	<div class="admin-header">
+		<div class="logo">
+			<a target="appiframe" href="/backend/welcome">Keson Backend</a>
+		</div>
+		<ul class="layui-nav layui-layout-left" style="background-color:#222;">
+			<li class="layui-nav-item">
+				<a target="appiframe" href="/backend/welcome">网站首页</a>
+			</li>
+		</ul>
+		<ul class="layui-nav layui-layout-right" style="background-color:#222;">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><$ name $></a>
+				<dl class="layui-nav-child">
+					<!-- <dd><a target="appiframe" href="/backend/basics">基本资料</a></dd> -->
+					<dd><a target="appiframe" href="/backend/passwd">密码修改</a></dd>
+				</dl>
+			</li>
+			<li class="layui-nav-item"><a  id="loginout">退出</a></li>
+		</ul>
+	</div>
+	<!-- 顶部结束 -->
+	<!-- 中部开始 -->
+	<!-- 左侧菜单开始 -->
+	<div class="left-nav">
+		<div id="side-nav">
+			<ul class="nav" id="nav">
+				<li id="menu8" class="open"><a _href=""><i class="layui-icon layui-icon-read"></i><cite>新闻管理</cite><i class="layui-icon nav_right"></i></a>
+					<ul class="sub-menu">
+						<li id="menu9"><a _href="/backend/articlelist?type=1"><i class="layui-icon layui-icon-right"></i><cite>公司新闻</cite></a></li>
+						<li id="menu10"><a _href="/backend/articlelist?type=2"><i class="layui-icon layui-icon-right"></i><cite>行业新闻</cite></a></li>
+					</ul>
+				</li>
+				<li id="menu1"><a _href=""><i class="layui-icon layui-icon-user"></i><cite>关于我们</cite><i class="layui-icon nav_right"></i></a>
+					<ul class="sub-menu">
+						<li id="menu2"><a _href="/backend/about?type=1" ><i class="layui-icon layui-icon-right"></i><cite>公司简介</cite></a></li>
+						<li id="menu3"><a _href="/backend/about?type=2"><i class="layui-icon layui-icon-right"></i><cite>董事长致辞</cite></a></li>
+						<li id="menu4"><a _href="/backend/honner"><i class="layui-icon layui-icon-right"></i><cite>荣誉资质</cite></a></li>
+						<li id="menu5"><a _href="/backend/about?type=4"><i class="layui-icon layui-icon-right"></i><cite>企业文化</cite></a></li>
+
+					</ul>
+				</li>
+				<li id="menu18"><a _href=""><i class="layui-icon layui-icon-chart"></i><cite>产品中心</cite><i class="layui-icon nav_right"></i></a>
+					<ul class="sub-menu">
+						<li id="menu19"><a _href="/backend/serise"><i class="layui-icon layui-icon-right"></i><cite>产品系列</cite></a></li>
+						<li id="menu20"><a _href="/backend/productadd"><i class="layui-icon layui-icon-right"></i><cite>发布产品</cite></a></li>
+						<li id="menu21"><a _href="/backend/productlist"><i class="layui-icon layui-icon-right"></i><cite>产品列表</cite></a></li>
+					</ul>
+				</li>
+				
+				<li id="menu22"><a _href=""><i class="layui-icon layui-icon-note"></i><cite>信息处理中心</cite><i class="layui-icon nav_right"></i></a>
+					<ul class="sub-menu">
+						<li id="menu23"><a _href="/backend/message"><i class="layui-icon layui-icon-right"></i><cite>用户留言列表</cite></a></li>
+						<li id="menu24"><a _href="/backend/inquiry"><i class="layui-icon layui-icon-right"></i><cite>产品询价列表</cite></a></li>
+					</ul>
+				</li>
+				<li id="menu13"><a _href=""><i class="layui-icon layui-icon-set"></i><cite>设置</cite><i class="layui-icon nav_right"></i></a>
+					<ul class="sub-menu">
+						<li id="menu14"><a _href="/backend/siteinfo"><i class="layui-icon layui-icon-right"></i><cite>网站基本设置</cite></a></li>
+						<li id="menu15"><a _href="/backend/bannerinfo"><i class="layui-icon layui-icon-right"></i><cite>首页轮播图设置</cite></a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- 左侧菜单结束 -->
+	<!-- 右侧主体开始 -->
+	<div class="page-content">
+		<iframe src='/backend/welcome' frameborder="0" scrolling="yes" allowtransparency="true" id="appiframe" name="appiframe"></iframe>
+	</div>
+	<!-- 右侧主体结束 -->
+	<!-- 中部结束 -->
+	<script type="text/javascript">
+		/*
+		 * @todo 左侧菜单事件
+		 * 如果有子级就展开，没有就打开frame
+		 */
+		$('body').on('click', '.left-nav #nav li', function(event) {
+			$('#nav li a').removeClass('active')
+			if($(this).children('.sub-menu').length) {
+				if($(this).hasClass('open')) {
+					$(this).removeClass('open');
+					$(this).find('.nav_right').removeClass('layui-icon-down');
+					$(this).find('.nav_right').addClass('layui-icon-up');
+					$(this).children('.sub-menu').stop().slideUp();
+					$(this).siblings().children('.sub-menu').slideUp();
+				} else {
+					$(this).addClass('open');
+					$(this).children('a').find('.nav_right').removeClass('layui-icon-up');
+					$(this).children('a').find('.nav_right').addClass('layui-icon-down');
+					$(this).children('.sub-menu').stop().slideDown();
+					$(this).siblings().children('.sub-menu').stop().slideUp();
+					$(this).siblings().find('.nav_right').removeClass('layui-icon-down');
+					$(this).siblings().find('.nav_right').addClass('layui-icon-up');
+					$(this).siblings().removeClass('open');
+				}
+			} else {
+				var url = $(this).children('a').attr('_href');
+				var title = $(this).find('cite').html();
+				var index = $('.left-nav #nav li').index($(this));
+				$(this).children('a').addClass('active')
+				$('#appiframe').attr('src', url);
+			}
+			event.stopPropagation(); //不触发任何前辈元素上的事件处理函数
+		});
+		
+		//左侧菜单事件右侧图标初始化
+		$(document).ready(function(){
+			$('.nav_right').removeClass('layui-icon-up');
+			$('.nav_right').removeClass('layui-icon-down');
+			$('.nav_right').addClass('layui-icon-up');
+			$('li.open > .nav_right').removeClass('layui-icon-up');
+			$('li.open > .nav_right').addClass('layui-icon-down');
+			$('li.open > .sub-menu').show();
+		});
+
+		$('#loginout').click(function () { 
+			 /**
+			 * 退出操作
+			 */
+			 layer.confirm("确定要退出吗？", {skin: 'layui-layer-lan', icon: 3}, function () {
+				localStorage.removeItem('kesonToken')
+				location.href = '/backend/loginout'
+			});
+		})
+	</script>
+	<script>
+		layui.use('element', function () {
+			var layer = layui.layer;
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+		});
+	</script>
+{% endblock %}

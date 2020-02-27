@@ -1,0 +1,189 @@
+{% extends "common/layout-back.html" %} 
+
+{% block head %}
+<link rel="stylesheet" href="/lib/webupload/webuploader.css">
+<link rel="stylesheet" href="/lib/webupload/style.css">
+<script src="/lib/webupload/webuploader.js"></script>
+<script src="/lib/webupload/upload.js"></script>
+
+{% endblock %}
+{% block body %}
+
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="javascript:;">首页</a><span lay-separator="">/</span>
+    <a href="javascript:;">产品中心</a><span lay-separator="">/</span>
+    <a><cite>发布产品</cite></a>
+  </span>
+</div>
+
+<div class="layui-fluid" style="padding:15px;">
+  <form class="layui-form" wid100=""  lay-filter="regularForm">
+    <div class="layui-form-item" >
+        <label class="layui-form-label">产品系列</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="seriseid" lay-filter="serise" lay-verify="required" >
+                <option value="">请选择</option>
+                {% for item in seriselist.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="proname" lay-verify="title" required autocomplete="off" placeholder="请输入产品名称" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">英文产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="enproname" lay-verify="title" required autocomplete="off" placeholder="请输入英文产品名称" class="layui-input">
+        </div>
+    </div>
+   
+   
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">产品简介</label>
+      <div class="layui-input-block">
+            <textarea name="prointro" class="layui-textarea" placeholder="请输入产品简介"></textarea>            
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">英文产品简介</label>
+        <div class="layui-input-block">
+                <textarea name="enprointro" class="layui-textarea" placeholder="请输入英文产品简介"></textarea>            
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">产品描述</label>
+        <div class="layui-input-block">
+            <textarea id="edit"    style="display: none;"    ></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">英文产品描述</label>
+        <div class="layui-input-block">
+            <textarea id="enedit"    style="display: none;"    ></textarea>
+        </div>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>产品图 - <span class="tipchicun">(宽度最大952像素,高度不限)</legend>
+    </fieldset>
+    <div id="wrapper">
+        <div id="container">
+            <div id="uploader" class="uploder-container">
+                <div class="queueList">
+                    <div id="dndArea" class="placeholder">
+                        <div id="filePicker"></div>
+                        <p>或将照片拖到这里，单次最多可选9张</p>
+                    </div>
+                </div>
+                <div class="statusBar" style="display:none;">
+                    <div class="progress">
+                        <span class="text">0%</span>
+                        <span class="percentage"></span>
+                    </div><div class="info"></div>
+                    <div class="btns">
+                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="article">立即提交</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+    var seriseId,seriseName,pastCover,proImgIndex
+    var productArr = []
+    var curproId = getParam('id') || null;
+    var pastIndex = 0;
+    var isFistUpload = true;
+    var isFirstPoint = true;
+  layui.use(['element','laydate', 'layedit', 'form'], function () {
+      var form = layui.form  
+        , layedit = layui.layedit
+      
+
+        var editIndex = layedit.build('edit',{
+            hideTool:['link','unlink','image'],
+            height:400
+        }); 
+
+        var eneditIndex = layedit.build('enedit',{
+            hideTool:['link','unlink','image'],
+            height:400
+        }); 
+
+        
+        form.render();
+
+        form.on('select(serise)', function(data){
+            seriseId = data.value
+            seriseName = $(this).html()
+        });
+
+
+        {% if productId %}
+        //获取
+        AjaxBox('/api/productinfo',{id:<$ productId $>},function (req) {
+            imgstr = ''
+            layedit.setContent(editIndex,req.data.procontent)
+            layedit.setContent(eneditIndex,req.data.enprocontent)
+            productArr = JSON.parse(req.data.coverurl)
+            pastCover = req.data.pastcover
+            $.each(productArr, function(index,item){
+                if(item == pastCover){
+                    pastIndex = index
+                    sessionStorage.setItem('pastindex',pastIndex)
+                }
+                imgstr += '<li><p class="title">yabo.jpg</p><p class="imgWrap" title="设为封面"><img src="<$ base_url $>'+item+'"></p><p class="progress"><span></span></p><div class="file-panel"><span class="cancel">删除</span></div><span class="success"></span>'+(item == pastCover?'<span class="post"></span>':'')+'</li>'
+
+            });
+            $('#dndArea').addClass('element-invisible')
+            $('#uploader').find('.filelist').append(imgstr)
+            $('#uploader').find('.statusBar').show()
+            $('#filePicker2 .webuploader-element-invisible').parent().css({
+                left: '10px',
+                width: '94px',
+                height: '42px',
+            })
+            form.val('regularForm',req.data)
+        })
+        {% endif %}
+
+        //提交
+        form.on('submit(article)',function (data) {
+            var content = layedit.getContent(editIndex);
+            var encontent = layedit.getContent(eneditIndex);
+            data.field = Object.assign({},data.field,{pastcover:pastCover,coverurl:JSON.stringify(productArr),procontent:content,enprocontent:encontent,seriseid:seriseId,serisename:seriseName{% if productId %},id:<$ productId $>{% endif %}})
+            AjaxBox('/api/product',data.field,function (req) {
+
+                layer.msg('成功',{icon:1,time:1000},function () {
+                    location.reload()
+                })
+                
+            })
+            return false
+        })
+
+  });
+</script>
+{% endblock %}

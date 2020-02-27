@@ -1,0 +1,81 @@
+{% extends "common/layout.html" %} 
+{% block head %}
+<link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+<script type="text/javascript" src="/lib/layui/layui.js"></script>
+{% endblock %}
+{% block body %}	
+			
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_news.jpg" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		<div class="zi_left">
+			<div class="top">
+				<span class="span1">{% if language=='cn' %}新闻资讯{% else %}NEWS{% endif %}</span>
+				<span  class="span2">{% if language=='cn' %}NEWS{% endif %}</span>
+			</div>
+			<ul>
+				<li {% if active == 'news' %}class="active"{% endif %}>
+					<a href="/news">{% if language=='cn' %}公司新闻{% else %}Company News{% endif %}</a>
+				</li>
+				<li {% if active == 'tradenews' %}class="active"{% endif %}>
+					<a href="/tradenews">{% if language=='cn' %}行业新闻{% else %}Trade News{% endif %}</a>
+				</li>
+			</ul>
+			{% include "common/contect_bar.html" %} 
+		</div>
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}{% if type == 1 %}公司{% else %}行业{% endif %}新闻{% else %}{% if type == 1 %}Company{% else %}Trade{% endif %} News{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> > <a href="/news">{% if language=='cn' %}新闻资讯{% else %}News{% endif %}</a> > <i>{% if language=='cn' %}{% if type == 1 %}公司{% else %}行业{% endif %}新闻{% else %}{% if type == 1 %}Company{% else %}Trade{% endif %} News{% endif %}</i></span>
+			</div>
+			<ul class="news_ul"> 
+				{% for item in news.data %}
+				<li>
+					<a href="/news_show?id=<$ item.id $>" class="clearfix">
+						<span class="ri">
+							<i><$ item.createdAt|day $></i>
+							<time><$ item.createdAt|yearmonth $></time>
+							<!-- <time>星期一</time> -->
+						</span>
+						<div class="wen_nei">
+							<h4>{% if language=='cn' %}<$ item.title $>{% else %}<$ item.entitle $>{% endif %}</h4>
+							<div class="wen_nei_zi">{% if language=='cn' %}<$ item.content|safe $>{% endif %}</div>
+						</div>
+					</a>
+				</li>
+				{% endfor %}
+			</ul>
+			<div id="navpage"></div>
+			{% include "common/news_product_bar.html" %} 
+		
+		</div>
+		
+	</div>
+	<script>
+	$(function(){
+		layui.use(['laypage','element'],function () {
+			var laypage = layui.laypage;
+			laypage.render({
+				elem: 'navpage'
+				,count: <$ news.total $>
+				,limit:5
+				,pages:<$ news.total_pages $>
+				,first: '首页'
+				,last: '尾页'
+				,layout: ['prev', 'page', 'next','count']
+				,theme:'#0083c7'
+				,curr: getParam('page') //获取起始页
+				,jump: function(e, first){ 
+					if(!first){  
+						location.href = '?page='+e.curr;  
+					} 
+				} 
+            });
+		})
+	})
+	</script>
+	
+	
+{% endblock %}

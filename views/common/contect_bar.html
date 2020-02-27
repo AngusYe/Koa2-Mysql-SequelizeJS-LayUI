@@ -1,0 +1,16 @@
+<div class="lian">
+    <div class="lian_t">
+        <span class="span1">{% if language=='cn' %}联系我们{% else %}CONTACT{% endif %}</span>
+        <span class="span2">{% if language=='cn' %}CONTACT{% endif %}</span>
+    </div>
+    <p>
+        {% if language=='cn' %}地址：<$ overAllData.address $>{% else %}ADDRESS：<$ overAllData.enaddress $>{% endif %}
+    </p>
+    <p>
+        {% if language=='cn' %}电话{% else %}TEL{% endif %}：<a href="tel:<$ overAllData.hotphone $>"><$ overAllData.hotphone $></a>
+    </p>
+    <p>
+        {% if language=='cn' %}邮箱{% else %}EMAIL{% endif %}：<a href="<$ overAllData.email $>"><$ overAllData.email $></a>
+    </p>
+    
+</div>

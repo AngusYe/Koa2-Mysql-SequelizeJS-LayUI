@@ -1,0 +1,17 @@
+<div class="zi_left">
+    <div class="top">
+        <span class="span1">{% if language=='cn' %}产品展示{% else %}PRODUCTS{% endif %}</span>
+        <span  class="span2">{% if language=='cn' %}PRODUCTS{% endif %}</span>
+    </div>
+    <ul>
+        <li {% if not seriseId %}class="active"{% endif %}>
+            <a href="/product">{% if language=='cn' %}全部{% else %}All Products{% endif %}</a>
+        </li>
+        {% for item in proserise.data %}
+        <li {% if seriseId == item.id %}class="active"{% endif %}>
+            <a href="/product?serise=<$ item.id $>">{% if language=='cn' %}<$ item.name $>{% else %}<$ item.enname $>{% endif %}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% include "common/contect_bar.html" %} 
+</div>

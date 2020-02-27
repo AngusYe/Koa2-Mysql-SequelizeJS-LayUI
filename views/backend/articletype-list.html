@@ -1,0 +1,124 @@
+{% extends "common/layout-back.html" %} 
+
+	{% block body %}
+  <div class="admin-content-box-nav">
+    <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+      <a href="javascript:;">首页</a><span lay-separator="">/</span>
+      <a href="javascript:;">分类管理</a><span lay-separator="">/</span>
+      <a><cite>分类列表</cite></a>
+    </span>
+  </div>
+
+  <div class="layui-fluid">
+    <div style="padding-top:15px;padding-bottom:5px;">
+      <button class="layui-btn" data-type="add">添加</button>
+    </div>
+
+    <div class="layui-form">
+      <table class="layui-table">
+        <colgroup>
+          <col width="60">
+          <col>
+          <col width="300">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>美食</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs"
+                onclick="edit_articletype('articletype-edit.html')"><i class="layui-icon layui-icon-edit"></i></a> <a
+                class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                  class="layui-icon layui-icon-delete"></i></a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>新闻</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs"
+                onclick="edit_articletype('articletype-edit.html')"><i class="layui-icon layui-icon-edit"></i></a> <a
+                class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                  class="layui-icon layui-icon-delete"></i></a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>八卦</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs"
+                onclick="edit_articletype('articletype-edit.html')"><i class="layui-icon layui-icon-edit"></i></a> <a
+                class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                  class="layui-icon layui-icon-delete"></i></a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>音乐</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs"
+                onclick="edit_articletype('articletype-edit.html')"><i class="layui-icon layui-icon-edit"></i></a> <a
+                class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                  class="layui-icon layui-icon-delete"></i></a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>财经</td>
+            <td><a class="layui-btn layui-btn-normal layui-btn-xs"
+                onclick="edit_articletype('articletype-edit.html')"><i class="layui-icon layui-icon-edit"></i></a> <a
+                class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                  class="layui-icon layui-icon-delete"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    layui.use(['laydate', 'jquery', 'form'], function () {
+      var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+      //……
+      //但是，如果你的HTML是动态生成的，自动渲染就会失效
+      //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+      form.render();
+
+      var laydate = layui.laydate;
+      //执行laydate实例
+      //常规用法
+      laydate.render({
+        elem: '#start-date'
+      });
+      laydate.render({
+        elem: '#end-date'
+      });
+    });
+
+    //修改分类
+    function edit_articletype(url) {
+      var layer_index = layer.open({
+        type: 2,
+        area: ['400px', '300px'],
+        fix: false, //不固定
+        maxmin: true,
+        shadeClose: true,
+        shade: 0.4,
+        title: '编辑',
+        content: url,
+        success: function (layero, index) {
+          layer.iframeAuto(index); //弹出框高度自适应
+          //向iframe页的id=house的元素传值 // 参考 https://yq.aliyun.com/ziliao/133150
+          //var body = layer.getChildFrame('body', index);
+          //body.contents().find("#dataId").val(id);
+          //console.log(id);
+        },
+        error: function (layero, index) {
+          //alert("aaa");
+        },
+        cancel: function () {
+          //右上角关闭回调
+
+          //return false 开启该代码可禁止点击该按钮关闭
+        }
+      });
+    }
+  </script>
+{% endblock %}

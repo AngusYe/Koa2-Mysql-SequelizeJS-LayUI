@@ -1,0 +1,161 @@
+{% extends "common/layout-back.html" %} 
+
+  {% block head %}
+  <link rel="stylesheet" href="/lib/webupload/webuploader.css">
+  <link rel="stylesheet" href="/lib/webupload/style.css">
+  <script src="/lib/webupload/webuploader.js"></script>
+  <script src="/lib/webupload/cxuploader.js"></script>
+
+  {% endblock %}
+
+	{% block body %}
+    <div class="layui-fluid" style="padding-top:15px;padding-bottom:15px;">
+        <div class="layui-tab">
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form" wid100="" id="regularForm" lay-filter="regularform">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                            <legend>荣誉资质图 - <span class="tipchicun">(300*407)像素</legend>
+                        </fieldset>
+                        <div class="layui-upload-list">
+                            <table class="layui-table" id="tablelist">
+                                <thead>
+                                    <tr><th>Banner</th>
+                                    <th>标题</th>
+                                    <th>排序</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr></thead>
+                                <tbody id="slideList"></tbody>
+                            </table>
+                        </div>
+                        <div class="uploder-container">										      		
+                            <div  class="cxuploder" id="pcupload">
+                                <div class="queueList">
+                                    <div class="placeholder" >
+                                        <div class="filePicker"></div>
+                                        <p>将照片拖到这里</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="statusBar" style="display:none;">
+                                    
+                                    
+                                    <div class="btns">
+                                        <div  class="jxfilePicker"></div>	
+    
+                                    </div>
+                                    <div class="info"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn layui-btn-lg" lay-submit="" lay-filter="regualrSub">确认保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <script>
+
+    var bannerArr = [];
+    var bannerIndex = 0;
+
+
+    
+    
+    layui.use(['form', 'element','upload','table','laytpl','layer'], function () {
+        var $ = layui.jquery;
+        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+        var upload = layui.upload;
+        var table = layui.table;
+        var laytpl = layui.laytpl;
+        var layer = layui.layer;
+
+
+        //提交\更新
+        function subBaseMsg(data) {
+            AjaxBox('/api/base',data,function (req) {
+                layer.msg('成功',{icon:1,time:1000})
+            })
+        }
+
+        //获取
+        function getBaseMsg() {
+            AjaxBox('/api/aboutinfo',{typeid:<$ aboutId $>},function (req) { 
+                var info = req.data;
+                var imgstr = ''
+                $('#slideList').html('')
+                if(info){
+                    if(info.honer){
+                        bannerArr = JSON.parse(info.honer)
+                        bannerIndex = bannerArr.length>0?bannerArr.length:0
+                        $.each(bannerArr,function (index,item) {
+                            imgstr += '<tr id="upload-'+ index +'"><td style="width: 150px;"><img  src="'+base_url+item.url+'" ></td><td style="width: 200px;">'+item.title+'</td><td>'+item.Index+'</td><td><span style="color: #5FB878;">已上传</span></td><td><button class="layui-btn layui-btn-normal layui-btn-xs already-edit" editIndex="'+index+'">编辑</button><button class="layui-btn layui-btn-xs layui-btn-danger already-delete" url="'+item.url+'" editIndex="'+index+'">删除</button></td></tr>'
+                        })
+                        $('#slideList').append(imgstr)
+                    }
+                }
+                
+                form.val('regularform',info)
+            })
+        }
+
+        getBaseMsg()
+
+         //Banner 删除
+
+         $('#slideList').on('click','.already-delete',function (e) {
+            e.preventDefault()
+            const editbannerIndex = $(this).attr('editIndex')
+            $(this).parent().parent().remove();
+            bannerArr.splice(editbannerIndex,1);
+            bannerIndex = bannerArr.length>0?bannerArr.length:0
+            delEveryImg($(this).attr('url'),function () {
+                AjaxBox('/api/about',{honer:JSON.stringify(bannerArr),typeid:3},function () {
+                    layer.msg('成功',{icon:1,time:1000})
+                })
+            })     
+        })
+
+        //Banner 编辑
+
+        $('#slideList').on('click','.already-edit',function (e) {
+            e.preventDefault()
+            layer.open({
+                title: '编辑',
+                type: 2,
+                shade: false,
+                maxmin: true,
+                shade: 0.5,
+                area: ['80%', '80%'],
+                content: '/backend/honer_edit?position='+$(this).attr('editIndex'),
+                zIndex: layer.zIndex,
+                end: function () {
+                    getBaseMsg()
+                }
+            });
+           
+        })
+       
+        form.on('submit(regualrSub)', function (data) {
+            data.field = Object.assign({},data.field,{honer:JSON.stringify(bannerArr),typeid:<$ aboutId $>})
+            AjaxBox('/api/about',data.field,function(req){
+                layer.msg('成功',{icon:1,time:1000},function () {
+                    location.reload()
+                })
+            })
+            return false;
+        });
+
+
+     
+    });
+    
+    </script>
+   
+{% endblock %}

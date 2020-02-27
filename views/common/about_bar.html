@@ -1,0 +1,24 @@
+<div class="zi_left">
+    <div class="top">
+        <span class="span1">{% if language=='cn' %}关于我们{% else %}ABOUT US{% endif %}</span>
+        <span  class="span2">{% if language=='cn' %}ABOUT US{% else %}关于我们{% endif %}</span>
+    </div>
+    <ul>
+        <li {% if active == 'about' %}class="active"{% endif %}>
+            <a href="/about">{% if language=='cn' %}公司简介{% else %}Company Profile{% endif %}</a>
+        </li>
+        <li {% if active == 'speech' %}class="active"{% endif %}>
+            <a href="/speech">{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</a>
+        </li>					
+        <li {% if active == 'honor' %}class="active"{% endif %}>
+            <a href="/honor">{% if language=='cn' %}荣誉资质{% else %}Honor{% endif %}</a>
+        </li>
+        <li {% if active == 'culture' %}class="active"{% endif %}>
+            <a href="/culture">{% if language=='cn' %}企业文化{% else %}Company Culture{% endif %}</a>
+        </li>
+        <li {% if active == 'mien' %}class="active"{% endif %}>
+            <a href="/mien">{% if language=='cn' %}基胜风采{% else %}Keson Mien{% endif %}</a>
+        </li>	
+    </ul>
+    {% include "common/contect_bar.html" %} 
+</div>

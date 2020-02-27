@@ -1,0 +1,32 @@
+{% extends "common/layout.html" %} 
+{% block body %}	
+	<!--banner-->
+	<section class="banner">
+	  	<div><img src="/img/banner_about.png" alt="" /></div>
+	</section>
+	<div class="zi_com clearfix">
+		{% include "common/about_bar.html" %}
+		<div class="zi_right">
+			<div class="bar clearfix">
+				<span class="b_tt">{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</span>
+				<span class="curbar"><i>{% if language=='cn' %}您当前的位置{% else %}Current Location{% endif %}：</i><a href="/">{% if language=='cn' %}首页{% else %}Home{% endif %}</a> > <a href="/about">{% if language=='cn' %}关于我们{% else %}About Us{% endif %}</a> > <i>{% if language=='cn' %}董事长致辞{% else %}Voice of MD{% endif %}</i></span>
+			</div>
+			<div class="about_zi">
+				<div class="ab_img">
+					<img src="/img/about_02.png" alt="" class="vcenter"/>
+					<i></i>
+				</div>
+				<div>
+					{% if language=='cn' %}<$ aboutUs.content|safe $>{% else %}<$ aboutUs.encontent|safe $>{% endif %}
+				</div>
+				
+			</div>
+			{% include "common/news_bar.html" %}
+			
+		</div>
+		
+	</div>
+	
+	
+	
+	{% endblock %}

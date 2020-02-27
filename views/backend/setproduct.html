@@ -1,0 +1,272 @@
+{% extends "common/layout-back.html" %} 
+
+{% block head %}
+
+{% endblock %}
+{% block body %}
+
+<div class="admin-content-box-nav">
+  <span class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility:visible;">
+    <a href="javascript:;">首页</a><span lay-separator="">/</span>
+    <a href="javascript:;">产品中心</a><span lay-separator="">/</span>
+    <a><cite>设置首页产品展示</cite></a>
+  </span>
+</div>
+
+<div class="layui-fluid" style="padding:15px;">
+  <form class="layui-form"  lay-filter="regularForm">
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="width: 100px;">左边大图产品:</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="firstserise" lay-filter="firstserise" lay-verify="required" >
+                <option value="">请选择产品系列</option>
+                {% for item in proserise.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="firstproductid" lay-filter="firstproduct" id="firstproduct" lay-verify="required" ></select>
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="width: 100px;">右边产品一:</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="secondserise" lay-filter="secondserise" lay-verify="required" >
+                <option value="">请选择产品系列</option>
+                {% for item in proserise.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="secondproductid" lay-filter="secondproduct" id="secondproduct" lay-verify="required" ></select>
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="width: 100px;">右边产品二:</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="threeserise" lay-filter="threeserise" lay-verify="required" >
+                <option value="">请选择产品系列</option>
+                {% for item in proserise.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="threeproductid" lay-filter="threeproduct" id="threeproduct" lay-verify="required" ></select>
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="width: 100px;">右边产品三:</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="fourserise" lay-filter="fourserise" lay-verify="required" >
+                <option value="">请选择产品系列</option>
+                {% for item in proserise.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="fourproductid" lay-filter="fourproduct" id="fourproduct" lay-verify="required" ></select>
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="width: 100px;">右边产品四:</label>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="fiveserise" lay-filter="fiveserise" lay-verify="required" >
+                <option value="">请选择产品系列</option>
+                {% for item in proserise.data %}
+                    {% if item.status == 1 %}
+                    <option value="<$ item.id $>"><$ item.name $></option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="layui-input-inline" style="width: 300px;">
+            <select name="fiveproductid" lay-filter="fiveproduct" id="fiveproduct" lay-verify="required" ></select>
+        </div>
+    </div>
+
+    
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="product">立即提交</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+    var IndexProductArr = [];
+    var oldIndexProArr = [];
+    var oldSeriseArr = [];
+    var oldProName = [];
+  layui.use(['element','laydate', 'layedit', 'form'], function () {
+      var form = layui.form  
+      
+
+        function getProduct(id,domid){
+            AjaxBox('/api/productlist',{seriseid:id,limit:100000},function(req){
+                $('#'+domid).html()
+                if(req.total > 0){
+                    var str = ''
+                    $.each(req.data,function (index,item) {
+
+                        str += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    })
+                    
+                    $('#'+domid).html('<option value="">请选择</option>'+str)
+                    form.render('select');
+                }
+            })
+        }
+       
+        
+        form.render();
+
+        //系列下拉
+        //1
+        form.on('select(firstserise)', function(data){
+            getProduct(data.value,'firstproduct')
+        });
+         //2
+         form.on('select(secondserise)', function(data){
+            getProduct(data.value,'secondproduct')
+        });
+         //3
+         form.on('select(threeserise)', function(data){
+            getProduct(data.value,'threeproduct')
+        });
+         //4
+         form.on('select(fourserise)', function(data){
+            getProduct(data.value,'fourproduct')
+        });
+         //5
+         form.on('select(fiveserise)', function(data){
+            getProduct(data.value,'fiveproduct')
+        });
+
+        //产品下拉
+        //1
+        form.on('select(firstproduct)', function(data){
+            IndexProductArr[0] = {
+                wz:1,
+                proid:data.value
+            }
+        });
+         //2
+         form.on('select(secondproduct)', function(data){
+            IndexProductArr[1] = {
+                wz:2,
+                proid:data.value
+            }
+            
+        });
+         //3
+         form.on('select(threeproduct)', function(data){
+            IndexProductArr[2] = {
+                wz:3,
+                proid:data.value
+            }
+            
+        });
+         //4
+         form.on('select(fourproduct)', function(data){
+            IndexProductArr[3] = {
+                wz:4,
+                proid:data.value
+            }
+            
+        });
+         //5
+         form.on('select(fiveproduct)', function(data){
+            IndexProductArr[4] = {
+                wz:5,
+                proid:data.value
+            }
+            
+        });
+
+       //获取
+        AjaxBox('/api/productfront',{},function (req) {
+           $.each(req.data,function(index,item){
+               IndexProductArr[item.frontwz-1] = {wz:item.frontwz,proid:item.id}
+               oldIndexProArr[item.frontwz-1] = {wz:item.frontwz,proid:item.id}
+               oldSeriseArr[item.frontwz-1] = item.seriseid
+               oldProName[item.frontwz-1] = item.proname
+           })
+
+           AjaxBox('/api/productlist',{page:1,limit:100000},function(req){
+                var first,second,three,four,five = '';
+                $.each(req.data,function (index,item) {
+                    if(oldSeriseArr[0] == item.seriseid){
+                        first += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    }else if(oldSeriseArr[1] == item.seriseid){
+                        second += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    }else if(oldSeriseArr[2] == item.seriseid){
+                        three += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    }else if(oldSeriseArr[3] == item.seriseid){
+                        four += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    }else if(oldSeriseArr[4] == item.seriseid){
+                        five += '<option value="'+item.id+'">'+item.proname+'</option>'
+                    }
+                    
+                })
+
+                $('#firstproduct').html('<option value="">请选择</option>'+first)
+                $('#secondproduct').html('<option value="">请选择</option>'+second)
+                $('#threeproduct').html('<option value="">请选择</option>'+three)
+                $('#fourproduct').html('<option value="">请选择</option>'+four)
+                $('#fiveproduct').html('<option value="">请选择</option>'+five)
+                form.val('regularForm',{
+                    
+                    firstproductid:oldIndexProArr[0].proid,
+                    secondproductid:oldIndexProArr[1].proid,
+                    threeproductid:oldIndexProArr[2].proid,
+                    fourproductid:oldIndexProArr[3].proid,
+                    fiveproductid:oldIndexProArr[4].proid
+                })
+                form.render('select');
+           })
+           
+           form.val('regularForm',{
+                firstserise:oldSeriseArr[0],
+                secondserise:oldSeriseArr[1],
+                threeserise:oldSeriseArr[2],
+                fourserise:oldSeriseArr[3],
+                fiveserise:oldSeriseArr[4],
+            
+           })
+           form.render('select');
+        })
+        
+
+        //提交
+        form.on('submit(product)',function (data) {
+           
+            AjaxBox('/api/productup',{inproarr:JSON.stringify(IndexProductArr),oldunproarr:JSON.stringify(oldIndexProArr)},function (req) {
+
+                layer.msg('成功',{icon:1,time:1000},function () {
+                    //location.reload()
+                })
+                
+            })
+            return false
+        })
+
+  });
+</script>
+{% endblock %}

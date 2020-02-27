@@ -1,0 +1,26 @@
+<div class="guan_pro">
+        <div class="guan_top">
+            <span {% if language=='en' %}style="width:115px;"{% endif %}>{% if language=='cn' %}产品展示{% else %}PRODUCTS{% endif %}</span>
+        </div>
+        <ul class="pro_ul clearfix">
+            {% for item in productList %}
+            <li>
+                <a href="/proshow?procode=<$ item.id $>&serise=<$ item.seriseid $>">
+                    <div class="pic">
+                    <img src="<$ item.pastcover $>" alt="" class="vcenter" />
+                    <i></i>
+                    <a href="/proshow?procode=<$ item.id $>&serise=<$ item.seriseid $>" class="zhe_a fadeInq">
+                        <img src="/img/pro_sou.png" alt=""  class="vcenter"/>	
+                        
+                    </a>
+                    </div>
+                    <div class="text">
+                        <h4>{% if language=='cn' %}<$ item.proname $>{% else %}<$ item.enproname $>{% endif %} </h4>
+                        <span></span>
+                        <a href="/product?serise=<$ item.seriseid $>" class="more">MORE ></a>
+                    </div>
+                </a>
+            </li>	
+            {% endfor %}
+        </ul>
+    </div>
