@@ -16,7 +16,7 @@
         </div>
         <form class="layui-form" id="regularForm" action="">
             <div class="loginBody">
-                <h1>Keson Backend</h1>
+                <h1>wanmai Backend</h1>
                 <div class="layui-container">
                     <div class="loginAccount">
                         <i class="icon layui-icon">&#xe612;</i>
@@ -57,7 +57,7 @@
                             layer.msg('成功',{icon:1,time:1000});
                             $('#regularForm')[0].reset();
                             location.href = '/backend';
-                            localStorage.setItem('kesonToken',req.bean.token);
+                            localStorage.setItem('wanmaiToken',req.bean.token);
                         }else{
                             layer.msg(req.msg,{icon:5,time:1000});
                         }

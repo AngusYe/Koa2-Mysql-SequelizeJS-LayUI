@@ -1,7 +1,7 @@
 {
     "apps" : [
         {
-          "name"        : "keson",
+          "name"        : "wanmai",
           // 编译版本的 app 的入口
           "script"      : "app.js",
           // 在生产环节不用兼听文件的变化

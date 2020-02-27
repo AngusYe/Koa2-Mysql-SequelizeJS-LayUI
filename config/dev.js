@@ -5,7 +5,7 @@ module.exports = {
     base_url: 'http://localhost',    //base_url
     redis_url: '',       //redis地址
     redis_port: '',      //redis端口号
-    upload_url:"C:/keson/public",//文件上传路径
+    upload_url:"C:/wanmai/public",//文件上传路径
     njconfig:{
         trimBlocks: true,  //nunjucks config
         tags: {
@@ -14,6 +14,6 @@ module.exports = {
         },
         noCache:true
     },
-    secret: 'szkeson'
+    secret: 'szkessdfsdfon'
 
 }

@@ -13,5 +13,5 @@ module.exports = {
             variableEnd: '$>'
         }
     },
-    secret: 'keson'
+    secret: 'wanmai'
 }

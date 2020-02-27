@@ -69,7 +69,7 @@ var puBlic={
     initParams:function () {
         var params = this.params;
         params.baseUrl = $('#base_url').val();
-        params.language = getCookie('kesonlanguage') || 'cn';
+        params.language = getCookie('wanmailanguage') || 'cn';
 
     },
     load: function() {},
@@ -81,7 +81,7 @@ var puBlic={
         //zn/en
 
         dom.language.on('click','a',function() {
-            setCookie('kesonlanguage',$(this).attr('lagua'))
+            setCookie('wanmailanguage',$(this).attr('lagua'))
             location.reload()
         })
 

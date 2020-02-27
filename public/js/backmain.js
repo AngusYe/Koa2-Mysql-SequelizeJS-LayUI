@@ -26,7 +26,7 @@ function AjaxBox(url,data,success,error,extra) {
         url: url,
         data: data,
         dataType: "json",
-        headers:{'authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+        headers:{'authorization':`Bearer ${window.localStorage.getItem('wanmaiToken')}`},
         success:function (req,textStatus,request) {
             var msg=''
             var newtoken = request.getResponseHeader("authorization"); 
@@ -54,7 +54,7 @@ function delEveryImg(param,success) {
         type:'POST',
         url:'/api/delfiles',
         dataType: "json",
-        headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+        headers:{'Authorization':`Bearer ${window.localStorage.getItem('wanmaiToken')}`},
         data:{url:param},
         success:function (req) {
             if(req.code == 200){
@@ -74,7 +74,7 @@ function delEveryImg(param,success) {
     window[uploadInstlogo] = upload.render({
             elem: '#'+DomId
             ,url: '/api/uploadfiles'
-            ,headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`}
+            ,headers:{'Authorization':`Bearer ${window.localStorage.getItem('wanmaiToken')}`}
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){

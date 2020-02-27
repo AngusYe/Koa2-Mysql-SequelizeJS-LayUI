@@ -405,7 +405,7 @@
                 type:'POST',
                 url:'/api/delfiles',
                 dataType: "json",
-                headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+                headers:{'Authorization':`Bearer ${window.localStorage.getItem('wanmaiToken')}`},
                 data:{url:param},
                 success:function (req) {
                     if(req.code == 200){

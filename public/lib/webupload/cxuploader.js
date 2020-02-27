@@ -70,7 +70,7 @@
 
                 chunkSize: 512 * 1024,
 
-                headers:{'Authorization':`Bearer ${window.localStorage.getItem('kesonToken')}`},
+                headers:{'Authorization':`Bearer ${window.localStorage.getItem('wanmaiToken')}`},
                             
                 server: '/api/uploadfiles',//上传地址
                 

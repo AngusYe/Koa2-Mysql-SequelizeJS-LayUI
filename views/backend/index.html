@@ -5,7 +5,7 @@
 	<!-- 顶部开始 -->
 	<div class="admin-header">
 		<div class="logo">
-			<a target="appiframe" href="/backend/welcome">Keson Backend</a>
+			<a target="appiframe" href="/backend/welcome">wanmai Backend</a>
 		</div>
 		<ul class="layui-nav layui-layout-left" style="background-color:#222;">
 			<li class="layui-nav-item">
@@ -123,7 +123,7 @@
 			 * 退出操作
 			 */
 			 layer.confirm("确定要退出吗？", {skin: 'layui-layer-lan', icon: 3}, function () {
-				localStorage.removeItem('kesonToken')
+				localStorage.removeItem('wanmaiToken')
 				location.href = '/backend/loginout'
 			});
 		})
