@@ -23,8 +23,8 @@ npm run dev (运行项目)
 
 
 ## 图片展示
-![image]
+![image](https://github.com/yeguozhou/Koa2-Mysql-SequelizeJS-LayUI/blob/master/back.png)
 
-![image]
+![image](https://github.com/yeguozhou/Koa2-Mysql-SequelizeJS-LayUI/blob/master/shouye.png)
 
 
